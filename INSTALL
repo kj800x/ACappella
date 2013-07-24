@@ -1,0 +1,26 @@
+DEVELOPMENT SERVER:
+=====
+
+Install:
+==
+1) Clone the current version of this software from github.com/robodoggy/ACapella
+2) Make sure you have Python 2.7 (apt-get install python), Django (pip install django), and python-mysqldb (apt-get install python-mysqldb).
+3) Change acapellasite/settings.py and make sure that it points to a valid mysql server (or change it to a mysqlite server). At this point you might want to just double check all the settings.
+(4): Instead of doing step 3, you could use a command like `ssh PRODUCTIONSERVERIP -L 3306:localhost:3306` to use your production server mysql database.
+
+Run:
+==
+1) Run "python manage.py runserver"
+
+PRODUCTION SERVER
+=====
+
+Install:
+==
+TODO: Find this out for myself.
+
+Run:
+==
+Your server will serve it up, like a server should. So I'll just write this here:
+Navigate to the URL in your favorite web browser.
+
