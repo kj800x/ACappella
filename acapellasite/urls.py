@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
 
     url(r'^$', TemplateView.as_view(template_name="index.html")),
-    # url(r'^acapellasite/', include('acapellasite.foo.urls')),
+    url(r'^arranger/', include('acapellaapp.urlsarranger')),
+    url(r'^', inclde('acapellaapp.urlsguest'))
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
