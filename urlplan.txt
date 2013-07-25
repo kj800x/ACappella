@@ -1,0 +1,15 @@
+/ - choice between singer or arranger
+	/arranger - all subs require sign-in - lists groups for signed in arranger
+		/makegroup - makes a group (POST REQUEST ONLY)
+		/[GROUP_SHORTCODE] - Lists all songs in that group - And Edit Group
+			/makesong - makes a song (POST REQUEST ONLY)
+			/[SONG_SHORTCODE] - Lists all the tracks in a song - And Edit song
+				/maketrack - makes a track (POST REQUEST ONLY)
+				/[TRACK_ID] - Edit Song
+	/findgroup - List of all groups
+	/[GROUP_SHORTCODE] - List of all songs that group does
+		/[SONG_SHORTCODE] - Mixdown spot for that song
+
+SHORTCODES THAT NEED TO BE MADE: 
+	GROUP - Unique among all GROUPS
+	SONG - Unique among all SONGS in parent GROUP
