@@ -17,7 +17,7 @@ import os
 
 import sys
 
-path = '/www/django/ACapella'
+path = '/www/django/acapellasite'
 if path not in sys.path:
     sys.path.append(path)
     
