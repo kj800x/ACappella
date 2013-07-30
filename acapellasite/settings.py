@@ -1,3 +1,5 @@
+import localsettings
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -7,17 +9,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'acapelladjango',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'acapelladjango',
-        'PASSWORD': 'WindBreaker2012',
-        'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
+DATABASES = localsettings.getdatabases() 
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -81,7 +73,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'huje#^(t2=8=-t@#e@jg9ec&c)l8zp-l7to552^ubvx*v-rmig'
+SECRET_KEY = localsettings.getsecret()
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -105,13 +97,7 @@ ROOT_URLCONF = 'acapellasite.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'acapellasite.wsgi.application'
 
-TEMPLATE_DIRS = (
-   # "/home/kevin/django/ACapella/templates", #DevelopmentServer
-   "/www/django/acapellasite/templates" #ProductionServer
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+TEMPLATE_DIRS = localsettings.gettemplatedirs()
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -156,3 +142,4 @@ LOGGING = {
         },
     }
 }
+
