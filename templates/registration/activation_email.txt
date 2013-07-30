@@ -1,0 +1,20 @@
+Hello!
+
+Someone (hopefully you) tried to create an account on !!!!REPLACE THIS!!!!.
+
+If it was you, and you'd like to activate and use your account, click the link below or copy and paste it into your web browser's address bar:
+
+!!! REPLACE THE BELOW !!!
+
+http://home.coolkev.com/accounts/activate/{{activation_key}}/
+
+You have {{expiration_days}} days to go to this link.
+
+
+If you didn't request this, you don't need to do anything; you won't receive any more email from us, and the account will expire automatically in {{expiration_days}} days.
+
+Hope to see you on the site,
+--
+
+Kevin Johnson
+Site Developer

@@ -1,0 +1,273 @@
+{% extends 'app_public.html' %}
+
+{% block SpareJavascript %}
+
+<style>
+
+.mButton {
+  border-radius: 5px;
+  border: 2px solid #6549F2;
+  background: #D8D3F2;
+  display: block;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+
+.active_mButton {
+  border-radius: 5px;
+  border: 2px solid #6549F2;
+  background: #745BF5;
+  display: block;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+
+.sButton {
+  border-radius: 5px;
+  border: 2px solid #37A329;
+  background: #CAF0C5;
+  display: block;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+
+.active_sButton {
+  border-radius: 5px;
+  border: 2px solid #37A329;
+  background: #4EE83A;
+  display: block;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
+</style>
+  <script type="text/javascript">
+  function TryToStart(){
+    result = isReady();
+    if (result == true){
+      $('.shouldstartlocked').removeAttr('disabled');
+      //alert("Ready!");
+      setalltimes(0);
+      updateseek();
+      }
+    if (result == false){
+      start=setTimeout(TryToStart,50);
+    }
+    return result;
+  }
+  
+  function pausecomp(ms) {
+    ms += new Date().getTime();
+    while (new Date() < ms){}
+  } 
+
+  window.solonum = 0;
+  window.channels = {};
+  
+  function CreateChannels() {
+  
+  {% for a in Channels %}
+  	window.channels[{{a.id}}] = {"title": "{{a.title}}", "id": {{a.id}}, "LeftSoundObject": new Audio("/user/channels/L-{{a.link}}"), "RightSoundObject": new Audio("/user/channels/R-{{a.link}}"), "volume": 1, "pan": 0, "solo": false,"mute":false};
+  	pausecomp(500);
+  {% endfor %}
+  }
+  
+  {% for a in Channels %}
+    a_id = {{a.id}};
+  {% endfor %}
+  
+  function playall(){
+    for (channelindex in window.channels){
+      window.channels[channelindex].LeftSoundObject.play();
+      window.channels[channelindex].RightSoundObject.play();
+    }
+  }
+  
+  function pauseall(){
+    setalltimes(window.channels[a_id].LeftSoundObject.currentTime)
+  }
+  
+  function stopplayback(channelobject){
+    for (channelindex in window.channels){
+      window.channels[channelindex].LeftSoundObject.pause();
+      window.channels[channelindex].RightSoundObject.pause();
+    }
+  }
+  
+  function changevol(soundid, volume){
+    window.channels[soundid].volume = volume;
+    recalcvol(soundid);
+  }
+  
+  function changepan(soundid, panslider){
+    window.channels[soundid].pan = panslider;
+    recalcvol(soundid);
+  }
+  
+  function swapMute(soundid){
+    sound = window.channels[soundid];
+    sound.mute = !sound.mute;
+    if (sound.mute){
+      document.getElementById("chan_Mute_" + sound.id).className = "active_mButton";
+    } else {
+      document.getElementById("chan_Mute_" + sound.id).className = "mButton";
+    }
+    recalcvol(soundid);
+  }
+  
+  function swapSolo(soundid){
+    sound = window.channels[soundid];
+    sound.solo = !sound.solo;
+    if (sound.solo){
+      document.getElementById("chan_Solo_" + sound.id).className = "active_sButton";
+      window.solonum++;
+    } else {
+      document.getElementById("chan_Solo_" + sound.id).className = "sButton";
+      window.solonum--;
+    }
+    for (soundindex in window.channels){
+      recalcvol(soundindex);
+    }
+  }
+  
+  function recalcvol(soundid){
+    var sound = window.channels[soundid];
+    if (window.solonum > 0){
+      if (window.channels[soundid].solo){
+        var left = (0.5-(0.005*sound.pan))*sound.volume;
+        var right = ((0.005*sound.pan)+0.5)*sound.volume;
+        sound.LeftSoundObject.volume = left;
+        sound.RightSoundObject.volume = right;
+      } else {
+        sound.LeftSoundObject.volume = 0;
+        sound.RightSoundObject.volume = 0;  
+      }
+    } else  {
+      if (sound.mute){
+        sound.LeftSoundObject.volume = 0;
+        sound.RightSoundObject.volume = 0;      
+      } else {
+        var left = (0.5-(0.005*sound.pan))*sound.volume;
+        var right = ((0.005*sound.pan)+0.5)*sound.volume;
+        sound.LeftSoundObject.volume = left;
+        sound.RightSoundObject.volume = right;
+      }    
+    }
+  }
+  
+  function setalltimes(towhat){
+    stopplayback();
+    for (channelindex in window.channels){
+      window.channels[channelindex].LeftSoundObject.currentTime = towhat;
+      window.channels[channelindex].RightSoundObject.currentTime = towhat;
+    }
+  }
+  
+  function settopercent(value){
+    var newval = value/100;
+    var percentfromval = window.channels[a_id].LeftSoundObject.duration * newval;
+    setalltimes(percentfromval);
+  }
+  
+  function updateseek()
+  {
+    var soundobject = window.channels[a_id].LeftSoundObject
+    document.getElementById('seek').value=(soundobject.currentTime/soundobject.duration)*100;
+    
+    var curtimeminute = Math.floor(soundobject.currentTime/60);
+    var curtimesecond = Math.round(soundobject.currentTime - (curtimeminute*60));
+    $("#curtime").text(curtimeminute + ":" + curtimesecond);
+    
+    t=setTimeout(updateseek,50);
+  }
+  
+  function isReady(){
+  var result = true;
+    resulterr = [];
+    for (var index in channels){
+      resulterr.push({"Left": channels[index].LeftSoundObject.readyState, "Right": channels[index].RightSoundObject.readyState});
+      if (channels[index].LeftSoundObject.readyState != 4) {
+        document.getElementById("loaderror").innerHTML += " {L" + index + "(" + channels[index].LeftSoundObject.readyState + ")}";
+        result = false;
+      }
+      if (channels[index].RightSoundObject.readyState != 4) {
+        document.getElementById("loaderror").innerHTML += " {R" + index + "(" + channels[index].RightSoundObject.readyState + ")}";
+        result = false;
+      }
+    }
+    return result;
+    }
+  </script>
+  
+{% endblock SpareJavascript%}
+
+{% block content %}
+  <h1> <a href="../..">GO BACK TO {{collection.title}}</a> </h1>
+
+  <h1> {{project.title}} </h1>
+  
+  <p> {{project.preformance_Notes|linebreaksbr}} </p>
+  
+  {% if Channels %}
+      <table>
+        <tr>
+          <td>
+            <button class="shouldstartlocked" onclick="playall()" disabled>
+              Play
+            </button>
+          </td>
+          <td>
+            <button class="shouldstartlocked" onclick="pauseall()" disabled>
+              Pause
+            </button>
+          </td>
+          <td>
+            <button class="shouldstartlocked" onclick="setalltimes(0)" disabled>
+              Reset
+            </button>
+          </td>
+        </tr>
+      </table>
+      <br />
+      JUMP TO: <div><input style="width:100%" type="range" id="seek" min="0" max="100" value="0" step=".5" onchange="settopercent(this.value);"></div>
+      Current Time: <span id="curtime">LOADING</span>
+      <br />
+      <table style="width:100%">
+      {% for a in Channels %}
+        <tr>
+          <td style="width:30%">
+            {{a.title}}
+          </td>
+          <td>
+            <span onclick="swapMute({{a.id}})" id="chan_Mute_{{a.id}}" class="mButton">M</span>
+          </td>
+          <td>
+            <span onclick="swapSolo({{a.id}})" id="chan_Solo_{{a.id}}" class="sButton">S</span>
+          </td>
+          <td>
+            <div>L<input type="range" name="points" min="-100" max="100" onchange="changepan({{a.id}}, this.value)">R</div>
+          </td>
+          <td>
+            <div>Q<input type="range" name="points" min="0" max="1" step=".05" value="1" onchange="changevol({{a.id}}, this.value)">L</div>
+          </td>
+        </tr>
+      {% endfor %}
+      </table>
+      <div id="loaderror" style="display:none;">
+      </div>
+      <script>
+      CreateChannels();
+      TryToStart();
+      
+      </script>
+  {% endif %}
+  <br />
+  {% if project.pdf %} <!-- CHANGE THS URL HERE **TOODODOODODOOD**-->
+      <iframe src="http://docs.google.com/gview?url=http://home.coolkev.com/user/pdfs/{{project.id}}.pdf&embedded=true" style="width:600px; height:500px;" frameborder="0"></iframe>
+  {% endif %}
+{% endblock content %}
+
+{% block title %}Learn {{project.title}}{% endblock title %}

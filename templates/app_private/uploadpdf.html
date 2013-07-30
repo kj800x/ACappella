@@ -1,0 +1,13 @@
+{% extends 'app_private.html' %}
+
+{% block content %}
+  <h1> <a href="..">GO BACK</a> </h1>
+  <h1> Upload the PDF for {{project.title}} </h1>
+  <form enctype="multipart/form-data" action="" method="POST">{% csrf_token %}
+    {{form}}
+    <input type="submit" />
+  </form>
+
+{% endblock content %}
+
+{% block title %}Upload PDF: {{project.title}}{% endblock title %}

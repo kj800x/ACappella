@@ -1,0 +1,37 @@
+body {
+    background-color:#103e80;
+}
+
+#container {
+    background-color:#6899E7;
+    border-color: #263957;
+}
+
+#logoutin {
+    background-color:#C7A8ED;
+    border-color: #340570;
+}
+
+#titlewrap {
+    background-color:#b3ddff;
+    border-color:#263957;
+}
+
+#navsidebar {
+    background-color:#C7A8ED;
+    border-color: #340570;
+}
+
+#contentdiv {
+    background-color:#b3ddff;
+    border-color:#263957;
+}
+
+#footer {
+    background-color: #66A1D2;
+    border-color: #043C6B;
+}
+
+a:visited {
+    color: #502982;
+}

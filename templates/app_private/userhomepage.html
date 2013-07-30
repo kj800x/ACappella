@@ -1,0 +1,24 @@
+{% extends 'app_private.html' %}
+
+{% block SpareJavascript %}
+<style>
+
+</style>
+{% endblock SpareJavascript %}
+
+{% block content %}
+
+  <h1> Your Collections </h1>
+  <ul>
+  {% for a in Collections %}
+    <li><a href="/app/collection/{{a.id}}/">{{a.title}}</a></li>
+  {% endfor %}
+  </ul>
+  
+  <form action="" method="POST">{% csrf_token %}
+    {% include 'formsnippet.html' with form=NewCollectionForm title="Create a new collection" %}
+  </form>
+
+{% endblock content %}
+
+{% block title %}Your Collections{% endblock title %}

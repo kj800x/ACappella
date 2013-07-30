@@ -1,0 +1,17 @@
+{% extends 'templatebase.html' %}
+
+{% block title %}{{group.name}}{% endblock title %}
+
+{% block content %}
+
+{% if song_list %}
+    <ul>
+    {% for song in song_list %}
+        <li><a href="/{{group.short_code}}/{{song.short_code}}/">{{ song.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No songs are available.</p>
+{% endif %}
+
+{% endblock content %}

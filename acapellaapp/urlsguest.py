@@ -7,7 +7,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     # Examples:
-    #url(r'^$', 'acapellasite.views.home', name='home'),
+    url(r'^findgroup$', 'acapellaapp.views.findgroup', name='findgroup'),
+    url(r'^(?P<group_short_code>[^/]+)/$', 'acapellaapp.views.displaygroup', name='displaygroup'),
     #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
 
    # url(r'^$', TemplateView.as_view(template_name="index.html")),

@@ -1,0 +1,41 @@
+<div class="formcontainer">
+	<div class="formtitle"><h1> {{title}} </h1></div>
+	
+	{% if form.errors %}
+		<script>
+			window.errorpanel = {{panel}};
+		</script>
+		<div class="formerrors" onclick='$( ".formerrorsdata" ).toggle("Clip"); $( ".formfielderror" ).effect( "highlight" );'>
+			<div class="formerrorsshow">
+				!!Show Errors!!
+			</div>
+			<div class="formerrorsdata" style="display: none;">
+				{{form.errors}}
+			</div>
+		</div>
+	{% endif %}
+	
+	{% for field in form %}
+		<div class="formfield">
+			<div class="formfieldlabel">
+				{{field.label_tag}}
+			</div>
+			{% if field.errors %}
+			<div class="formfielderror">
+				{% for error in field.errors %}
+					{{error}}
+				{% endfor %}
+			</div>
+			{% endif %}
+			<div class="formfieldelement">
+				{{field}}
+			</div>
+		</div>
+	{% endfor %}
+	<div class="formfield">
+		<input type="submit" />
+	</div>
+	<div style="clear:both">
+		&nbsp;
+	</div>
+</div>

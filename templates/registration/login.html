@@ -1,0 +1,39 @@
+{% extends 'public.html' %}
+
+{% block title %}Log In To PeerEditIt.com{% endblock title %}
+
+{% block content %}
+  <h1> Database Reset 12-4-12</h1>
+	{% for error in form.errors %}
+	    {% if error == "username" %}
+		<span class="formerror">Please enter your Username</span><br />
+		{% endif %}
+	    {% if error == "password" %}
+		<span class="formerror">Please enter your Password</span><br />
+		{% endif %}
+	    {% if error == "__all__" %}
+		<span class="formerror">You ether typed in the wrong username and password
+		combination, or you haven't clicked the link in your activation email.</span><br />
+		{% endif %}
+	{% endfor %}
+	
+	<form onsubmit="return isformvalid(this)" method="post" action="{% url django.contrib.auth.views.login %}">
+	{% csrf_token %}
+	<table>
+	<tr>
+		<td>{{ form.username.label_tag }}</td>
+		<td>{{ form.username }}</td>
+	</tr>
+	<tr>
+		<td>{{ form.password.label_tag }}</td>
+		<td>{{ form.password }}</td>
+	</tr>
+	</table>
+	
+	<input type="submit" value="Login" /><br /><br />
+	Registration is disabled until we can achieve DMCA compatibility. If you know me personally, I can set you an account up. But be aware that all data will be wiped when we become DMCA compatible (most likely)
+	{% comment %}<a href="/accounts/register/">Register</a>{% endcomment %}
+	<input type="hidden" name="next" value="{% if not next %}/app/{% endif %}{{ next }}" />
+	</form>
+{% endblock content %}
+

@@ -1,0 +1,37 @@
+	#accordion {
+		border:1px solid #1C73E6;
+		border-radius: 20px;
+		padding:10px;
+		background: #6BABFF;
+	}
+	
+	#accordion > h3 {
+		background: #B0F2FF;
+		padding:2px;
+		padding-left:5px;
+		border:1px solid #00758C;
+		border-radius: 10px;
+		margin-bottom: 0px;
+	}
+	
+	#accordion > h3.ui-state-active {
+		background: #69E6FF;
+		margin-bottom: 0px;
+		border-bottom-left-radius: 0px;
+		border-bottom-right-radius: 0px;
+	}
+	
+	
+	#accordion > div{
+		border:1px solid #5E2DFC;
+		background:#98B2FA;
+		padding:20px;
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		border-top:none;
+	}
+	
+	
+	#accordion form {
+		margin:0px
+	}
