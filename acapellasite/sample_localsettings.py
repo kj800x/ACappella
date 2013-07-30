@@ -18,3 +18,9 @@ def gettemplatedirs():
     "/home/kevin/django/ACapella/templates", #DevelopmentServer
    #"/www/django/acapellasite/templates", #ProductionServer
 )
+
+def getstaticdirs():
+   return (
+    "/home/kevin/django/ACapella/static", #DevelopmentServer
+   #"/www/django/acapellasite/templates", #ProductionServer
+)
