@@ -106,8 +106,8 @@ ROOT_URLCONF = 'acapellasite.urls'
 WSGI_APPLICATION = 'acapellasite.wsgi.application'
 
 TEMPLATE_DIRS = (
-    "/home/kevin/django/ACapella/templates", #DevelopmentServer
-   # "/www/django/acapellasite/templates" #ProductionServer
+   # "/home/kevin/django/ACapella/templates", #DevelopmentServer
+   "/www/django/acapellasite/templates" #ProductionServer
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
