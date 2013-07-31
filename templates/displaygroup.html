@@ -1,9 +1,18 @@
-{% extends 'templatebase.html' %}
+{% extends 'basetemplate.html' %}
 
 {% block title %}{{group.name}}{% endblock title %}
 
-{% block content %}
+{% block contenttitle %}{{group.name}}{% endblock %}
 
+{% block contentcontent %}
+
+{% if group.message %}
+  <p> {{group.message}} </p>
+{% else %}
+  <p> This group is fresh off the press! This group's arranger can replace this message by editing the "message to the group". </p>  
+{% endif %}
+<hr />
+<p> Which song would you like to work on? </p>
 {% if song_list %}
     <ul>
     {% for song in song_list %}
@@ -11,7 +20,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No songs are available.</p>
+    <p>Oops... No songs are available.</p>
 {% endif %}
 
-{% endblock content %}
+{% endblock contentcontent %}

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Group(models.Model):
     arranger = models.ForeignKey(User)
     name = models.CharField('group name',max_length=50)
+    message = models.TextField('message to the group', blank=True)
     short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.name;
@@ -16,6 +17,7 @@ class Song(models.Model):
     group = models.ForeignKey(Group)
     title = models.CharField('song title', max_length=50)
     pub_date = models.DateTimeField('date published')
+    message = models.TextField('message to the group about this song', blank=True)
     short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.title;

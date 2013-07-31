@@ -1,0 +1,25 @@
+{% extends 'basetemplate.html' %}
+
+{% block title %}{{song.title}} - {{group.name}}{% endblock title %}
+
+{% block contenttitle %}{{song.title}} - {{group.name}}{% endblock %}
+
+{% block contentcontent %}
+
+{% if song.message %}
+  <p> {{song.message}} </p>
+{% endif %}
+<hr />
+
+<p> This is where the magic will soon happen, but right now there's nothing... </p>
+{% if track_list %}
+    <ul>
+    {% for track in track_list %}
+        <li><a href="/static/user/channels/{{track.static_location}}">{{ track.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Litterally nothing... like no tracks or anything...</p>
+{% endif %}
+
+{% endblock contentcontent %}

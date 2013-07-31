@@ -1,9 +1,11 @@
-{% extends 'templatebase.html' %}
+{% extends 'basetemplate.html' %}
 
 {% block title %}Find Group{% endblock title %}
 
-{% block content %}
+{% block contenttitle %} Find your vocal group {% endblock contenttitle%}
 
+{% block contentcontent %}
+<p> Great! If the director of your vocal group pointed you to this website, go ahead and try and find your group below, (or try anyways). If not, show it to them! </p>
 {% if group_list %}
     <ul>
     {% for group in group_list %}
@@ -11,7 +13,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No groups are available.</p>
+    <p>Ooops... No groups are available.</p>
 {% endif %}
 
-{% endblock content %}
+{% endblock contentcontent %}
