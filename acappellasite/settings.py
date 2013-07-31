@@ -88,10 +88,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'acapellasite.urls'
+ROOT_URLCONF = 'acappellasite.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'acapellasite.wsgi.application'
+WSGI_APPLICATION = 'acappellasite.wsgi.application'
 
 TEMPLATE_DIRS = localsettings.gettemplatedirs()
 
@@ -105,7 +105,7 @@ INSTALLED_APPS = (
     # 'registration',
     # Uncomment the next line to enable the admin:
      'django.contrib.admin',
-     'acapellaapp',
+     'acappellaapp',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

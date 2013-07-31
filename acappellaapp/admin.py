@@ -1,5 +1,5 @@
 from django.contrib import admin
-from acapellaapp.models import Group, Song, Track
+from acappellaapp.models import Group, Song, Track
 
 admin.site.register(Group)
 admin.site.register(Song)

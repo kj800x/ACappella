@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import render
-from acapellaapp.models import Group, Song
+from acappellaapp.models import Group, Song
 from django.http import HttpResponse
 
 def findgroup(request):
