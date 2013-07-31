@@ -48,6 +48,11 @@
 									<li>
 										<a href="/findgroup">Singers</a>
 									</li>
+									</li>{% if user.is_authenticated %}
+								  <br />
+									<li>
+										<span>Hello {{user.get_username}}, <a href="/accounts/logout">not {{user.get_username}}?</a></span>
+									</li>{% endif %}
 								</ul>
 							</nav>
 

@@ -43,7 +43,7 @@
 									<li class="break" />
 									<li>
 										<a href="/findgroup">Singers</a>
-									</li>{% if user %}
+									</li>{% if user.is_authenticated %}
 								  <br />
 									<li>
 										<span>Hello {{user.get_username}}, <a href="/accounts/logout">not {{user.get_username}}?</a></span>
