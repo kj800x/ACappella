@@ -1,0 +1,3 @@
+Change URL scheme to nest groups under /group/.
+Login page should do Javascript verification to make sure they don't try their email address.
+Login page should put errors in a better place.
