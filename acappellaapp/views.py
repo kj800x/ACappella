@@ -2,6 +2,11 @@
 from django.shortcuts import render
 from acappellaapp.models import Group, Song, Track
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def arrangerhome(request):
+    return render(request, 'arrangerhome.html', {"user": request.user})
 
 def findgroup(request):
     group_list = Group.objects.all()
@@ -21,3 +26,4 @@ def displaysong(request, group_short_code, song_short_code):
     track_list = Track.objects.filter(song = song);
     context = {'group': group, 'song': song, 'track_list': track_list}
     return render(request, 'displaysong.html', context)
+    
