@@ -46,12 +46,12 @@
 									</li>
 									<li class="break" />
 									<li>
-										<a href="/findgroup">Singers</a>
+										<a href="/group/findgroup">Singers</a>
 									</li>
 									</li>{% if user.is_authenticated %}
 								  <br />
 									<li>
-										<span>Hello {{user.get_username}}, <a href="/accounts/logout">not {{user.get_username}}?</a></span>
+										<span>Hello {{user.profile.name}}, <a href="/accounts/logout">(not you?)</a></span>
 									</li>{% endif %}
 								</ul>
 							</nav>
@@ -67,7 +67,7 @@
 							    singers can download learning tracks.</p>
 						<ul class="actions">
 							<li><a href="/arranger/" class="button">I'm an arranger</a></li>
-							<li><a href="/findgroup" class="button">I'm a singer</a></li>
+							<li><a href="/group/findgroup" class="button">I'm a singer</a></li>
 						</ul>
 					</section>
 
@@ -91,7 +91,7 @@
 						</section>
 						<section class="6u feature">
 							<div class="image-wrapper">
-								<a href="/findgroup" class="image full"><img src="/static/telephasic_base/images/pic02.jpg" alt="" /></a>
+								<a href="/group/findgroup" class="image full"><img src="/static/telephasic_base/images/pic02.jpg" alt="" /></a>
 							</div>
 							<header>
 								<h2>Singers</h2>

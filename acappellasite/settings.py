@@ -144,3 +144,4 @@ ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, us
 
 LOGIN_REDIRECT_URL = '/arranger/'
 
+AUTH_PROFILE_MODULE = "acappellasite.UserProfile"

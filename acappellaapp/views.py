@@ -1,10 +1,19 @@
 # Create your views here.
 from django.shortcuts import render
-from acappellaapp.models import Group, Song, Track
-from django.http import HttpResponse
+from acappellaapp.models import Group, Song, Track, UserProfile
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
+def check_profile(f):
+  def wrapper(*args, **kw):
+    if not args[0].user.profile.name:
+      return HttpResponseRedirect('/')
+    else:
+      return f(*args, **kw) 
+  return wrapper
+
 @login_required
+@check_profile
 def arrangerhome(request):
     return render(request, 'arrangerhome.html', {"user": request.user})
 

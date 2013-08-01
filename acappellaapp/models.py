@@ -3,8 +3,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    name = models.CharField("Full Name", max_length=50)
+
 class Group(models.Model):
-    arranger = models.ForeignKey(User)
+    arranger = models.ForeignKey(UserProfile)
     name = models.CharField('group name',max_length=50)
     message = models.TextField('message to the group', blank=True)
     short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
@@ -30,3 +34,6 @@ class Track(models.Model):
     static_location = models.CharField('static location for this audio file', max_length=100)
     def __unicode__(self):
         return self.name + " (" + self.song.title + ")";
+        
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
