@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     # Examples:
+    url(r'^profile$', 'acappellaapp.views.arrangerprofile', name='arrangerprofile'),
     url(r'^$', 'acappellaapp.views.arrangerhome', name='arrangerhome'),
     #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
 

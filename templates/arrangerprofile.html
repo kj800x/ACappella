@@ -1,0 +1,16 @@
+{% extends 'basetemplate.html' %}
+
+{% block title %}Edit Profile{% endblock title %}
+
+{% block contenttitle %} Edit your profile {% endblock contenttitle%}
+
+{% block contentcontent %}
+
+<p> Your profile helps you be identified by your students, and to give you a more comforable experience around the site. </p>
+
+<form action="" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Update" />
+</form>
+
+{% endblock contentcontent %}

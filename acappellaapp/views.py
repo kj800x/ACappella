@@ -3,19 +3,38 @@ from django.shortcuts import render
 from acappellaapp.models import Group, Song, Track, UserProfile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.forms import ModelForm
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ('user',)
 
 def check_profile(f):
   def wrapper(*args, **kw):
     if not args[0].user.profile.name:
-      return HttpResponseRedirect('/')
+      return HttpResponseRedirect('/arranger/profile')
     else:
       return f(*args, **kw) 
   return wrapper
 
+def arrangerprofile(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = ProfileForm(request.POST, instance=request.user.profile) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            form.save()
+            return HttpResponseRedirect('/arranger/') # Redirect after POST
+    else:
+        form = ProfileForm(instance=request.user.profile) # An unbound form
+    return render(request, 'arrangerprofile.html', {"form": form})
+      
+
 @login_required
 @check_profile
 def arrangerhome(request):
-    return render(request, 'arrangerhome.html', {"user": request.user})
+    return render(request, 'arrangerhome.html', {})
 
 def findgroup(request):
     group_list = Group.objects.all()

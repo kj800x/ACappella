@@ -1,3 +1,5 @@
 + Change URL scheme to nest groups under /group/.
   Login page should do Javascript verification to make sure they don't try their email address.
   Login page should put errors in a better place.
+  Create a profile fixer page.
+  Make it so that the tracks can be mixed down.
