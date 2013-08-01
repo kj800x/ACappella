@@ -9,7 +9,7 @@
 {% if group_list %}
     <ul>
     {% for group in group_list %}
-        <li><a href="/{{group.short_code}}/">{{ group.name }}</a></li>
+        <li><a href="/group/{{group.short_code}}/">{{ group.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
-    join_date = models.DateTimeField('date published', auto_now_add=True)
+    join_date = models.DateTimeField('Join date', auto_now_add=True)
     website_name = models.CharField("How you are addressed by the website (can be silly)", max_length=50)
     group_name = models.CharField("How you are addressed by those in your groups", max_length=50)
     def __unicode__(self):
@@ -26,7 +26,7 @@ class Group(models.Model):
 class Song(models.Model):
     group = models.ForeignKey(Group)
     title = models.CharField('song title', max_length=50)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', auto_now_add=True)
     message = models.TextField('message to the group about this song', blank=True)
     short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
