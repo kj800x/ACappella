@@ -5,9 +5,14 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
-    website_name = models.CharField("How you are addressed by the website", max_length=50)
+    join_date = models.DateTimeField('date published', auto_now_add=True)
+    website_name = models.CharField("How you are addressed by the website (can be silly)", max_length=50)
     group_name = models.CharField("How you are addressed by those in your groups", max_length=50)
-
+    def __unicode__(self):
+        return self.group_name;
+    class Meta:
+        ordering = ['join_date']
+        
 class Group(models.Model):
     arranger = models.ForeignKey(UserProfile)
     name = models.CharField('group name',max_length=50)
