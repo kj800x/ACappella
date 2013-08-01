@@ -12,7 +12,7 @@ class ProfileForm(ModelForm):
 
 def check_profile(f):
   def wrapper(*args, **kw):
-    if not args[0].user.profile.name:
+    if not (args[0].user.profile.website_name and args[0].user.profile.group_name):
       return HttpResponseRedirect('/arranger/profile')
     else:
       return f(*args, **kw) 

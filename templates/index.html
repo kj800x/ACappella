@@ -51,7 +51,11 @@
 									</li>{% if user.is_authenticated %}
 								  <br />
 									<li>
-										<span>Hello {{user.profile.name}}, <a href="/accounts/logout">(not you?)</a></span>
+									  {% if user.profile.website_name %}
+										<span>Hello {{user.profile.website_name}}, <a href="/accounts/logout">(not you?)</a></span>
+										{% else %}
+										<span>Hello {{user.username}}, <a href="/accounts/logout">(not you?)</a></span>
+										{% endif %}
 									</li>{% endif %}
 								</ul>
 							</nav>

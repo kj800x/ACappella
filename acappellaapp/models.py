@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
-    name = models.CharField("Full Name", max_length=50)
+    website_name = models.CharField("How you are addressed by the website", max_length=50)
+    group_name = models.CharField("How you are addressed by those in your groups", max_length=50)
 
 class Group(models.Model):
     arranger = models.ForeignKey(UserProfile)
