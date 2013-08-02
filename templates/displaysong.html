@@ -10,7 +10,59 @@
   <p> {{song.message}} </p>
 {% endif %}
 <hr />
+<p> What would you like to do? </p>
+<ul class="actions">
+{% if song.pdf_location %}
+  <li><a class="button" href="/static/user/pdfs/{{song.pdf_location}}">Download the sheet music as a PDF</a></li>
+{% endif %}
+{% if track_list %}
+  <li><a class="button" href="" onclick="$(this).hide();$('#mixer').show();return false;">Create a learning track</a></li>
+{% endif %}
+{% if not track_list and not song.pdf_location %}
+  <p> It looks like there's nothing to do </p>
+{% endif %}
+</ul>
 
+<style>
+</style>
+
+<div id="mixer" style="display:none; border: 1px solid grey; padding:20px; border-radius: 10px">
+<p style="text-align: center;">Create Learning Track</p><hr />
+  <table style="border:1px solid grey">
+    <tr>
+      <th>
+        Track Name
+      </th>
+      <th>
+        Pan
+      </th>
+      <th>
+        Effect
+      </th>
+    </tr>
+    {% for track in track_list %}
+      <tr class="track" data-filename="{{track.location}}">
+        <td>
+          {{track.name}}:
+        </td>
+        <td>
+          <label>Left:</label><input type="radio" name="pan-{{track.name}}" value="Left">
+          <label>Center:</label><input type="radio" name="pan-{{track.name}}" value="Center" checked>
+          <label>Right:</label><input type="radio" name="pan-{{track.name}}" value="Right">
+        </td>
+        <td>
+          <label>None:</label><input type="radio" name="effect-{{track.name}}" value="0" checked>
+          <label>Octave Down:</label><input type="radio" name="effect-{{track.name}}" value="8vb">
+          <label>Octave Up:</label><input type="radio" name="effect-{{track.name}}" value="8va" >
+          <label>Mute:</label><input type="radio" name="effect-{{track.name}}" value="mute" >
+        </td>
+      </tr>
+    {% endfor %}
+    
+  </table>
+</div>
+
+<!--
 <p> This is where the magic will soon happen, but right now there's nothing... </p>
 {% if track_list %}
     <ul>
@@ -21,5 +73,5 @@
 {% else %}
     <p>Litterally nothing... like no tracks or anything...</p>
 {% endif %}
-
+-->
 {% endblock contentcontent %}

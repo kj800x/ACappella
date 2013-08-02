@@ -26,6 +26,7 @@ class Group(models.Model):
 class Song(models.Model):
     group = models.ForeignKey(Group)
     title = models.CharField('song title', max_length=50)
+    pdf_location = models.CharField('static location for this song\'s PDF', max_length=100, blank=True)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
     message = models.TextField('message to the group about this song', blank=True)
     short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
@@ -37,7 +38,7 @@ class Song(models.Model):
 class Track(models.Model):
     song = models.ForeignKey(Song)
     name = models.CharField('track name' ,max_length=50)
-    static_location = models.CharField('static location for this audio file', max_length=100)
+    location = models.CharField('static location for this audio file', max_length=100)
     def __unicode__(self):
         return self.name + " (" + self.song.title + ")";
         
