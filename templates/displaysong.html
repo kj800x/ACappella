@@ -24,11 +24,27 @@
 </ul>
 
 <style>
+
+table, th, td
+{
+border: 1px solid black;
+}
+th {
+padding:3px;
+background:rgb(213, 65, 90);;
+color:white;
+font-size: 1.3em;
+text-align: left;
+}
+td {
+padding:3px;
+background: pink;
+}
 </style>
 
 <div id="mixer" style="display:none; border: 1px solid grey; padding:20px; border-radius: 10px">
 <p style="text-align: center;">Create Learning Track</p><hr />
-  <table style="border:1px solid grey">
+  <table border="1">
     <tr>
       <th>
         Track Name
@@ -60,6 +76,10 @@
     {% endfor %}
     
   </table>
+  
+  <ul class="actions">
+    <li><a href="" onclick="alert('But nothing happened');return false;" class="button"> Make a mix-down! </a></li>
+  </ul>
 </div>
 
 <!--
