@@ -3,3 +3,5 @@
   Login page should put errors in a better place.
 + Create a profile fixer page.
   Make it so that the tracks can be mixed down.
+  Clean up HTML pages (Remove inline JS/CSS)
+  Maybe send the JS through CLOSURE COMPILER

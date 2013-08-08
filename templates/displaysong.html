@@ -44,6 +44,7 @@ background: pink;
 
 <div id="mixer" style="display:none; border: 1px solid grey; padding:20px; border-radius: 10px">
 <p style="text-align: center;">Create Learning Track</p><hr />
+
   <table border="1">
     <tr>
       <th>
@@ -57,7 +58,7 @@ background: pink;
       </th>
     </tr>
     {% for track in track_list %}
-      <tr class="track" data-filename="{{track.location}}">
+      <tr class="track" data-name="{{track.name}}" data-filename="{{track.location}}">
         <td>
           {{track.name}}:
         </td>
@@ -78,8 +79,52 @@ background: pink;
   </table>
   
   <ul class="actions">
-    <li><a href="" onclick="alert('But nothing happened');return false;" class="button"> Make a mix-down! </a></li>
+    <li><a href="" onclick="request_mix();return false;" class="button"> Make a mix-down! </a></li>
   </ul>
+  <script type="text/javascript">
+  
+  function get_value_from_radios(r){
+    for (var i = 0; i < r.length; i++){
+      if (r[i].checked){
+        return r[i].value;
+      }
+    }
+    return null;
+  }
+  
+  function request_mix(){
+    //CREATE JSON
+    
+    var ts = document.getElementsByClassName("track");
+    
+    var requestdata = [];
+    
+    for (var i = 0; i < ts.length; i++){
+    
+      var t=ts[i];
+      var z = {};
+      z.pan = get_value_from_radios(document.getElementsByName("pan-"+t.dataset["name"]));
+      z.effect = get_value_from_radios(document.getElementsByName("effect-"+t.dataset["name"]));
+      z.filename = t.dataset["filename"];
+      requestdata.push(z);
+    
+    }
+    
+    // Make the request.
+    
+    var json_requestdata = JSON.stringify(requestdata);
+    
+    $.ajax({
+      type: "POST",
+      url: "/makeamixdown",
+      data: { "json": json_requestdata }
+    })
+    .done(function( msg ) {
+      alert( "Data Saved: " + msg );
+    });
+  }
+  </script>
+  
 </div>
 
 <!--
