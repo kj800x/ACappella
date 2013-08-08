@@ -52,10 +52,10 @@ background: pink;
       </th>
       <th>
         Pan
-      </th>
+      </th><!--
       <th>
         Effect
-      </th>
+      </th>-->
     </tr>
     {% for track in track_list %}
       <tr class="track" data-name="{{track.name}}" data-filename="{{track.location}}">
@@ -66,21 +66,22 @@ background: pink;
           <label>Left:</label><input type="radio" name="pan-{{track.name}}" value="Left">
           <label>Center:</label><input type="radio" name="pan-{{track.name}}" value="Center" checked>
           <label>Right:</label><input type="radio" name="pan-{{track.name}}" value="Right">
-        </td>
+        </td><!--
         <td>
           <label>None:</label><input type="radio" name="effect-{{track.name}}" value="0" checked>
           <label>Octave Down:</label><input type="radio" name="effect-{{track.name}}" value="8vb">
           <label>Octave Up:</label><input type="radio" name="effect-{{track.name}}" value="8va" >
           <label>Mute:</label><input type="radio" name="effect-{{track.name}}" value="mute" >
-        </td>
+        </td>-->
       </tr>
     {% endfor %}
     
   </table>
-  
+  {% csrf_token %}
   <ul class="actions">
-    <li><a href="" onclick="request_mix();return false;" class="button"> Make a mix-down! </a></li>
+    <li><a href="" onclick="request_mix();return false;" class="button" id="makeamixdownbutton"> Make a mix-down! </a></li>
   </ul>
+  {{csrf_token}}
   <script type="text/javascript">
   
   function get_value_from_radios(r){
@@ -93,6 +94,12 @@ background: pink;
   }
   
   function request_mix(){
+    //Processing
+    if (window.inprocessing == true) {return null}
+    
+    document.getElementById("makeamixdownbutton").innerHTML = "<img src=\"/static/ajax-loading.gif\" alt=\"Please Wait.\">";
+    window.inprocessing = true;
+  
     //CREATE JSON
     
     var ts = document.getElementsByClassName("track");
@@ -120,23 +127,13 @@ background: pink;
       data: { "json": json_requestdata }
     })
     .done(function( msg ) {
-      alert( "Recieved the following data: " + msg );
+      document.getElementById("makeamixdownbutton").innerHTML = "Make a mix-down!";
+      window.inprocessing = false;
+      download(msg, "mixdown.wav")
     });
   }
   </script>
   
 </div>
 
-<!--
-<p> This is where the magic will soon happen, but right now there's nothing... </p>
-{% if track_list %}
-    <ul>
-    {% for track in track_list %}
-        <li><a href="/static/user/tracks/{{track.static_location}}">{{ track.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Litterally nothing... like no tracks or anything...</p>
-{% endif %}
--->
 {% endblock contentcontent %}

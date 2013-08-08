@@ -20,6 +20,8 @@
 		<script src="/static/js/cookie/jquery.cookie.js"></script>
 		<script>
 		
+		function download(loc, filename){var a = $("<a>").attr("href", loc).attr("download", filename).appendTo("body");a[0].click();a.remove();}
+		
 		var csrftoken = $.cookie('csrftoken');
 		
 		function csrfSafeMethod(method) {

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from acappellaapp.models import Group, Song, Track, UserProfile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 from django.forms import ModelForm
 import acappellasite.localsettings as localsettings
 import json
@@ -50,7 +51,7 @@ def displaygroup(request, group_short_code):
     context = {'group': group, 'song_list': song_list}
     return render(request, 'displaygroup.html', context)
     
-    
+@csrf_protect    
 def displaysong(request, group_short_code, song_short_code):
     group = Group.objects.filter(short_code = group_short_code)[0]
     song = Song.objects.filter(short_code = song_short_code, group = group)[0]
@@ -95,4 +96,3 @@ def makeamixdown(request):
     
     #RESPOND WITH THE URL OF THE MIXDOWN FILE
     return HttpResponse(final_outputfile_url)
-    
