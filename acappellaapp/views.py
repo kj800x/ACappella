@@ -60,7 +60,7 @@ def displaysong(request, group_short_code, song_short_code):
     return render(request, 'displaysong.html', context)
     
 
-def makeamixdown(request):
+def makeamixdown(request, group_short_code, song_short_code):
     #GET THE POST VALUES FROM REQUEST
     jsonstring = request.POST["json"]
     #CREATE AN OBJECT OUT OF THE DATA: "json"

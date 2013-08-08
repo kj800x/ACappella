@@ -7,10 +7,10 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^makeamixdown/$', 'acappellaapp.views.makeamixdown', name='makeamixdown'),
     url(r'^findgroup$', 'acappellaapp.views.findgroup', name='findgroup'),
     url(r'^(?P<group_short_code>[^/]+)/$', 'acappellaapp.views.displaygroup', name='displaygroup'),
     url(r'^(?P<group_short_code>[^/]+)/(?P<song_short_code>[^/]+)/$', 'acappellaapp.views.displaysong', name='displaysong'),
+    url(r'^(?P<group_short_code>[^/]+)/(?P<song_short_code>[^/]+)/makeamixdown/$', 'acappellaapp.views.makeamixdown', name='makeamixdown'),
     #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'index.html'}),
 
    # url(r'^$', TemplateView.as_view(template_name="index.html")),
