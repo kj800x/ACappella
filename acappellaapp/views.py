@@ -8,6 +8,11 @@ from django.forms import ModelForm
 import acappellasite.localsettings as localsettings
 import json
 import os
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 class ProfileForm(ModelForm):
     class Meta:
@@ -80,6 +85,7 @@ def makeamixdown(request, group_short_code, song_short_code):
       leftmixfiles += localsettings.basedir() + a + " "
     left_outputfile = localsettings.basedir() + "static/user/temp/LEFT_temp.wav" #TODO: Make this random.
     leftmixcommand = "sox -m "+leftmixfiles+" "+left_outputfile
+    logger.debug(leftmixcommand)
     os.system(leftmixcommand)
     
     rightmixfiles = ""
@@ -87,11 +93,13 @@ def makeamixdown(request, group_short_code, song_short_code):
       rightmixfiles += localsettings.basedir() + a + " "
     right_outputfile = localsettings.basedir() + "static/user/temp/RIGHT_temp.wav" #TODO: Make this random.
     rightmixcommand = "sox -m "+rightmixfiles+" "+right_outputfile
+    logger.debug(rightmixcommand)
     os.system(rightmixcommand)
 
     final_outputfile = localsettings.basedir() + "static/user/mixdowns/FINAL_temp.wav" #TODO: Make this random.
     final_outputfile_url = "/static/user/mixdowns/FINAL_temp.wav"
     finalremixcommand = "sox -M "+left_outputfile+" "+right_outputfile+" "+final_outputfile
+    logger.debug(finalremixcommand)
     os.system(finalremixcommand)
     
     #RESPOND WITH THE URL OF THE MIXDOWN FILE
