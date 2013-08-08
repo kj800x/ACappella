@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     # Examples:
+    url(r'^makeamixdown$', 'acappellaapp.views.makeamixdown', name='makeamixdown'),
     url(r'^findgroup$', 'acappellaapp.views.findgroup', name='findgroup'),
     url(r'^(?P<group_short_code>[^/]+)/$', 'acappellaapp.views.displaygroup', name='displaygroup'),
     url(r'^(?P<group_short_code>[^/]+)/(?P<song_short_code>[^/]+)/$', 'acappellaapp.views.displaysong', name='displaysong'),

@@ -55,3 +55,7 @@ def displaysong(request, group_short_code, song_short_code):
     context = {'group': group, 'song': song, 'track_list': track_list}
     return render(request, 'displaysong.html', context)
     
+
+def makeamixdown(request):
+    return render(request, 'displaysong.html', context)
+    
