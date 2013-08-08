@@ -81,7 +81,6 @@ background: pink;
   <ul class="actions">
     <li><a href="" onclick="request_mix();return false;" class="button" id="makeamixdownbutton"> Make a mix-down! </a></li>
   </ul>
-  {{csrf_token}}
   <script type="text/javascript">
   
   function get_value_from_radios(r){
@@ -123,7 +122,7 @@ background: pink;
     
     $.ajax({
       type: "POST",
-      url: "/group/makeamixdown",
+      url: "/group/makeamixdown/",
       data: { "json": json_requestdata }
     })
     .done(function( msg ) {
