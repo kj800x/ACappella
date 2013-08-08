@@ -4,6 +4,9 @@ from acappellaapp.models import Group, Song, Track, UserProfile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.forms import ModelForm
+import acappellasite.localsettings as localsettings
+import json
+import os
 
 class ProfileForm(ModelForm):
     class Meta:
@@ -57,5 +60,39 @@ def displaysong(request, group_short_code, song_short_code):
     
 
 def makeamixdown(request):
-    return render(request, 'displaysong.html', context)
+    #GET THE POST VALUES FROM REQUEST
+    jsonstring = request.POST["json"]
+    #CREATE AN OBJECT OUT OF THE DATA: "json"
+    data = json.loads(jsonstring)
+    #TODO: LATER HERE, ADD IN EFFECT PROCESSING
+    #FROM THAT OBJECT DETERMINE WHAT GOES INTO THE LEFT CHANEL AND WHAT GOES INTO THE RIGHT CHANEL
+    left, right = [], [];
+    for track in data:
+        if track["pan"] == "Center" or track["pan"] == "Left":
+            left.append("static/user/tracks/"+track["filename"])
+        if track["pan"] == "Center" or track["pan"] == "Right":
+            right.append("static/user/tracks/"+track["filename"])
+    #COMBINE LEFT CHANEL FILES AND RIGHT CHANEL FILES
+    
+    leftmixfiles = ""
+    for a in left:
+      leftmixfiles += localsettings.basedir() + a + " "
+    left_outputfile = localsettings.basedir() + "static/user/temp/LEFT_temp.wav" #TODO: Make this random.
+    leftmixcommand = "sox -m "+leftmixfiles+" "+left_outputfile
+    os.system(leftmixcommand)
+    
+    rightmixfiles = ""
+    for a in right:
+      rightmixfiles += localsettings.basedir() + a + " "
+    right_outputfile = localsettings.basedir() + "static/user/temp/RIGHT_temp.wav" #TODO: Make this random.
+    rightmixcommand = "sox -m "+rightmixfiles+" "+right_outputfile
+    os.system(rightmixcommand)
+
+    final_outputfile = localsettings.basedir() + "static/user/mixdowns/FINAL_temp.wav" #TODO: Make this random.
+    final_outputfile_url = "/static/user/mixdowns/FINAL_temp.wav"
+    finalremixcommand = "sox -M "+left_outputfile+" "+right_outputfile+" "+final_outputfile
+    os.system(finalremixcommand)
+    
+    #RESPOND WITH THE URL OF THE MIXDOWN FILE
+    return HttpResponse(final_outputfile_url)
     

@@ -5,3 +5,6 @@
   Make it so that the tracks can be mixed down.
   Clean up HTML pages (Remove inline JS/CSS)
   Maybe send the JS through CLOSURE COMPILER
+  Finish up INSTALL
+  Make sure that nobody passes in any ".."'s or "/"'s in a mixdown paramater. No SQL injection please.
+  Check for additional TODO flags

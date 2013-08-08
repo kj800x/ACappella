@@ -1,3 +1,6 @@
+def basedir(): #Base dir for your site, with a trailing slash.
+    return "/path/to/your/ACappella/directory/(WITH A TRAILING SLASH)/"
+
 def getdatabases():
     return {
     'default': {
@@ -11,16 +14,14 @@ def getdatabases():
     }
 }
 def getsecret():
-    return 'huje#^(t2=8=-t@#e@jg9ec&c)l8zp-l7to552^ubvx*v-rmig'
+    return '30 character random string. Make It So'
 
 def gettemplatedirs():
-   return (
-    "/home/kevin/django/ACappella/templates", #DevelopmentServer
-   #"/www/django/acappellasite/templates", #ProductionServer
-)
+    return (
+      basedir() + "templates",
+    )
 
 def getstaticdirs():
-   return (
-    "/home/kevin/django/ACappella/static", #DevelopmentServer
-   #"/www/django/acappellasite/templates", #ProductionServer
-)
+    return (
+      basedir() + "static",
+    )
