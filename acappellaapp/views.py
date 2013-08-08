@@ -78,28 +78,43 @@ def makeamixdown(request, group_short_code, song_short_code):
             left.append("static/user/tracks/"+track["filename"])
         if track["pan"] == "Center" or track["pan"] == "Right":
             right.append("static/user/tracks/"+track["filename"])
-    #COMBINE LEFT CHANEL FILES AND RIGHT CHANEL FILES
     
-    leftmixfiles = ""
-    for a in left:
-      leftmixfiles += localsettings.basedir() + a + " "
+    if not left or not right:
+        sr = os.popen('soxi -r ' + localsettings.basedir() + "static/user/tracks/" + data[0]["filename"]).read()
+        sr = sr[:-1]
+    #Get sample rate of project if we need silence. 
+    
+    #COMBINE LEFT CHANEL FILES AND RIGHT CHANEL FILES #TODO: I AM BREAKING (DRY)[wiki]. Factor this out.
     left_outputfile = localsettings.basedir() + "static/user/temp/LEFT_temp.wav" #TODO: Make this random.
-    leftmixcommand = "sox -m "+leftmixfiles+" "+left_outputfile
-    logger.debug(leftmixcommand)
+    if len(left) > 1:
+        leftmixfiles = ""
+        for a in left:
+            leftmixfiles += localsettings.basedir() + a + " "
+        leftmixcommand = "sox -m "+leftmixfiles+" "+left_outputfile
+    if len(left) == 1:
+        leftmixcommand = "sox "+ localsettings.basedir() + left[0]+" "+left_outputfile
+    if len(left) == 0:
+        leftmixcommand = "sox -n -r "+ sr +" "+left_outputfile+" trim 0.0 1"
+    print(leftmixcommand)
     os.system(leftmixcommand)
     
-    rightmixfiles = ""
-    for a in right:
-      rightmixfiles += localsettings.basedir() + a + " "
     right_outputfile = localsettings.basedir() + "static/user/temp/RIGHT_temp.wav" #TODO: Make this random.
-    rightmixcommand = "sox -m "+rightmixfiles+" "+right_outputfile
-    logger.debug(rightmixcommand)
+    if len(right) > 1:
+        rightmixfiles = ""
+        for a in right:
+            rightmixfiles += localsettings.basedir() + a + " "
+        rightmixcommand = "sox -m "+rightmixfiles+" "+right_outputfile
+    if len(right) == 1:
+        rightmixcommand = "sox "+localsettings.basedir() + right[0]+" "+right_outputfile
+    if len(right) == 0:
+        rightmixcommand = "sox -n -r "+ sr +" "+right_outputfile+" trim 0.0 1"
+    print(rightmixcommand)
     os.system(rightmixcommand)
-
+    
     final_outputfile = localsettings.basedir() + "static/user/mixdowns/FINAL_temp.wav" #TODO: Make this random.
     final_outputfile_url = "/static/user/mixdowns/FINAL_temp.wav"
     finalremixcommand = "sox -M "+left_outputfile+" "+right_outputfile+" "+final_outputfile
-    logger.debug(finalremixcommand)
+    print(finalremixcommand)
     os.system(finalremixcommand)
     
     #RESPOND WITH THE URL OF THE MIXDOWN FILE
