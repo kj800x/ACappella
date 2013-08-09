@@ -83,6 +83,11 @@ background: pink;
   </ul>
   <script type="text/javascript">
   
+  function getSaveFileTitle(mixdata){
+    SongTitle = "{{song.title}}";
+    return (SongTitle+"-Mixdown.wav");
+  }
+  
   function get_value_from_radios(r){
     for (var i = 0; i < r.length; i++){
       if (r[i].checked){
@@ -128,7 +133,7 @@ background: pink;
     .done(function( msg ) {
       document.getElementById("makeamixdownbutton").innerHTML = "Make a mix-down!";
       window.inprocessing = false;
-      download(msg, "mixdown.wav")
+      download(msg, getSaveFileTitle(requestdata))
     });
   }
   </script>
