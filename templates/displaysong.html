@@ -63,9 +63,10 @@ background: pink;
           {{track.name}}:
         </td>
         <td>
-          <label>Left:</label><input type="radio" name="pan-{{track.name}}" value="Left">
+          <div>Left <input type="range" name="pan-{{track.name}}" min="-1" max="1"> Right</div>
+          <!--<label>Left:</label><input type="radio" name="pan-{{track.name}}" value="Left">
           <label>Center:</label><input type="radio" name="pan-{{track.name}}" value="Center" checked>
-          <label>Right:</label><input type="radio" name="pan-{{track.name}}" value="Right">
+          <label>Right:</label><input type="radio" name="pan-{{track.name}}" value="Right">-->
         </td><!--
         <td>
           <label>None:</label><input type="radio" name="effect-{{track.name}}" value="0" checked>
@@ -92,6 +93,19 @@ background: pink;
     return null;
   }
   
+  function get_value_from_slider(r){
+    if (r[0].value == "-1"){
+      return "Left"
+    }
+    if (r[0].value == "0"){
+      return "Center"
+    }
+    if (r[0].value == "1"){
+      return "Right"
+    }
+    return null;
+  }
+  
   function request_mix(){
     //Processing
     if (window.inprocessing == true) {return null}
@@ -109,7 +123,7 @@ background: pink;
     
       var t=ts[i];
       var z = {};
-      z.pan = get_value_from_radios(document.getElementsByName("pan-"+t.dataset["name"]));
+      z.pan = get_value_from_slider(document.getElementsByName("pan-"+t.dataset["name"]));
       z.effect = get_value_from_radios(document.getElementsByName("effect-"+t.dataset["name"]));
       z.filename = t.dataset["filename"];
       requestdata.push(z);
