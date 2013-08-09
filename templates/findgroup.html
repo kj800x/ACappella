@@ -5,15 +5,38 @@
 {% block contenttitle %} Find your vocal group {% endblock contenttitle%}
 
 {% block contentcontent %}
-<p> Great! If the director of your vocal group pointed you to this website, go ahead and try and find your group below, (or try anyways). If not, show it to them! </p>
+
 {% if group_list %}
-    <ul>
-    {% for group in group_list %}
-        <li><a href="/group/{{group.short_code}}/">{{ group.name }}</a></li>
-    {% endfor %}
+  <div id="magic-list">
+    <div style="padding:20px 0;">
+      <label>Search:</label>
+      <input class="search" />
+    </div>
+    <ul class="list">
+      {% for group in group_list %}
+       <li>
+         <a href="/group/{{group.short_code}}/"><span class="name">{{group.name}}</span></a>
+       </li>
+      {% endfor %}
     </ul>
+    <div id="noresults">
+      <p> There are no groups that match that search term. Check your spelling and try again! </p>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  options = {
+  "valueNames": ["name"],
+  "plugins": [[ 'emptyView', {
+              "name": "emptyView",
+              "emptyViewId": "noresults"
+              }
+          ]],
+  };
+  var magicList = new List('magic-list',options);
+  </script>
 {% else %}
-    <p>Ooops... No groups are available.</p>
+  <p>Ooops... No groups are available.</p>
 {% endif %}
 
 {% endblock contentcontent %}
