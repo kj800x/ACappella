@@ -1,3 +1,6 @@
+  "disabledbutton" css class, like a button, but doesn't glow on hover !IMPORTANT
+  Add a Download/Listen button after a mix-down
+
 + Change URL scheme to nest groups under /group/.
   Login page should do Javascript verification (to make sure they don't try their email address).
   Login page should put errors in a better place.
@@ -18,3 +21,11 @@
   Make it so that the filename creator checks for any obvious focuses, Ex: there is only the Bass on the left channel, so call it "TooClose-BassMix"
     Otherwise call it a generic "TooClose-Mixdown"
   When Implimenting Upload, make it call sox and have it merge to 1 channel. Sox gets grumpy later on if this isn't done
+  
+  Provide Sudestions in the more information text. (Part listing, Preformance notes)
+  More data for searching
+  Spotify Hyperlink on song page
+  Singer songwriter in title (on song listing page?)
+  Breadcrub - style in the title o pages. - Hyperlink
+  Subtle hints of design. (Little Icons next to song name/group name)
+  Pass Protection of group. (Hide from listing, URL is jumbled.)
