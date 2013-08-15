@@ -80,9 +80,14 @@ background: pink;
   </table>
   {% csrf_token %}
   <ul class="actions">
-    <li><a href="" onclick="{% if track_list %}request_mix(); {% endif %}return false;" class="button {% if not track_list %} disabledbutton {% endif %}" id="makeamixdownbutton" > Create and Download! </a></li>
+    <li><a href="" onclick="{% if track_list %}request_mix(); {% endif %}return false;" class="button {% if not track_list %} disabledbutton {% endif %}" id="makeamixdownbutton" > Create Mixdown! </a></li>
   </ul>
+  <div id="created_downloads">
+  </div>
   <script type="text/javascript">
+  
+  text_actiondefault = document.getElementById("makeamixdownbutton").innerHTML;
+  text_actionrunning = "<img src=\"/static/ajax-loading.gif\" alt=\"Please Wait.\">";
   
   function getSaveFileTitle(mixdata){
     SongTitle = "{{song.title}}";
@@ -115,7 +120,7 @@ background: pink;
     //Processing
     if (window.inprocessing == true) {return null}
     
-    document.getElementById("makeamixdownbutton").innerHTML = "<img src=\"/static/ajax-loading.gif\" alt=\"Please Wait.\">";
+    document.getElementById("makeamixdownbutton").innerHTML = text_actionrunning;
     window.inprocessing = true;
   
     //CREATE JSON
@@ -145,10 +150,48 @@ background: pink;
       data: { "json": json_requestdata }
     })
     .done(function( msg ) {
-      document.getElementById("makeamixdownbutton").innerHTML = "Create and Download!";
-      window.inprocessing = false;
-      download(msg, getSaveFileTitle(requestdata))
+      MixdownRecieved(msg, requestdata)
     });
+  }
+  
+  function MixdownRecieved(fileloc, data){
+  
+    var filename = getSaveFileTitle(data)
+    
+    var d = document.createElement("div");
+    d.className = "adownload";
+    
+    var label = document.createElement("label");
+    label.innerHTML = filename
+    d.appendChild(label);
+    
+    var actions = document.createElement("ul");
+    actions.className = "actions";
+    
+    var item = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = fileloc;
+    a.className = "button";
+    a.setAttribute("download", filename);
+    a.innerHTML = "Download!";
+    item.appendChild(a);
+    actions.appendChild(item);
+    
+    var item = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#";
+    a.className = "button";
+    a.innerHTML = "Play!";
+    item.appendChild(a);
+    actions.appendChild(item);
+    
+    d.appendChild(actions);
+    
+    document.getElementById("created_downloads").appendChild(d);
+    
+    document.getElementById("makeamixdownbutton").innerHTML = text_actiondefault;
+    window.inprocessing = false;
+    /*download(filename, getSaveFileTitle(requestdata))*/
   }
   </script>
   
