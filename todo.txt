@@ -19,8 +19,10 @@
     Processing
     Server Returned non 200
   Make it so that the filename creator checks for any obvious focuses, Ex: there is only the Bass on the left channel, so call it "TooClose-BassMix"
-    Otherwise call it a generic "TooClose-Mixdown"
++   Otherwise call it a generic "TooClose-Mixdown"
   When Implimenting Upload, make it call sox and have it merge to 1 channel. Sox gets grumpy later on if this isn't done
+  Write code for the search field, so it has an effect on search results. (Make it grey/small text next to the group name?)
+  
   
   Provide Sudestions in the more information text. (Part listing, Preformance notes)
   More data for searching
