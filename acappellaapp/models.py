@@ -15,9 +15,12 @@ class UserProfile(models.Model):
         
 class Group(models.Model):
     arranger = models.ForeignKey(UserProfile)
+    private = models.BooleanField('is the group hidden from the directory?', default=False)
     name = models.CharField('group name',max_length=50)
+    searchterms = models.TextField('Any additional search terms that someone might use to find this group', blank=True)
+    latlon = models.TextField('lat:lon for group', blank=True)
     message = models.TextField('message to the group', blank=True)
-    short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
+    short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.name;
     class Meta:
@@ -29,7 +32,7 @@ class Song(models.Model):
     pdf_location = models.CharField('static location for this song\'s PDF', max_length=100, blank=True)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
     message = models.TextField('message to the group about this song', blank=True)
-    short_code = models.CharField('unique, URL ready, shortcode', max_length=50)
+    short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.title;
     class Meta:
