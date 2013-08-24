@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import re;
 # Create your models here.
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     join_date = models.DateTimeField('Join date', auto_now_add=True)
-    website_name = models.CharField("How you are addressed by the website (can be silly)", max_length=50)
-    group_name = models.CharField("How you are addressed by those in your groups", max_length=50)
+    website_name = models.CharField("How you are addressed by the website. Ex: Dave Grossman", max_length=50)
+    group_name = models.CharField("How you are addressed by those in your groups. Ex: Mr. Grossman", max_length=50)
     def __unicode__(self):
         return self.group_name;
     class Meta:
@@ -15,7 +15,7 @@ class UserProfile(models.Model):
         
 class Group(models.Model):
     arranger = models.ForeignKey(UserProfile)
-    private = models.BooleanField('is the group hidden from the directory?', default=False)
+    public = models.BooleanField('Is the group listed in the directory?', default=True)
     name = models.CharField('group name',max_length=50)
     searchterms = models.TextField('Any additional search terms that someone might use to find this group', blank=True)
     latlon = models.TextField('lat:lon for group', blank=True)
@@ -23,6 +23,20 @@ class Group(models.Model):
     short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.name;
+    def findshortcode(self, name):
+        notalpha = re.compile('[\W]+')
+        base = notalpha.sub('', name)
+        modifier = 0;
+        if not base:
+          base = "No_Name_Provided"
+        while True:
+          if modifier:
+            totry = base + str(modifier);
+          else:
+            totry = base;
+          if (not self._default_manager.filter(short_code=totry)):
+            return totry;
+          modifier = modifier + 1;
     class Meta:
         ordering = ['name']
 

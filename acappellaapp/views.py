@@ -13,7 +13,7 @@ import random
 class GroupCreateForm(ModelForm):
     class Meta:
         model = Group
-        exclude = ('arranger',)
+        exclude = ('arranger','latlon', 'short_code', 'message')
         
 class ProfileForm(ModelForm):
     class Meta:
@@ -54,8 +54,9 @@ def arrangerhome(request):
     newgroup = Group(arranger=request.user.profile)
     form = GroupCreateForm(request.POST, instance=newgroup) # A form bound to the POST data
     if form.is_valid(): # All validation rules pass
+      newgroup.short_code = newgroup.findshortcode(newgroup.name)
       form.save()
-      return HttpResponseRedirect('/arranger/'+str(newgroup.short_code))
+      return HttpResponseRedirect('/arranger/group/'+str(newgroup.short_code))
   else:
     form = GroupCreateForm()
   keywords = {"Groups": Group.objects.filter(arranger=request.user.profile), "GroupCreateForm": form }
