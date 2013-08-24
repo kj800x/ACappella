@@ -15,8 +15,8 @@ class UserProfile(models.Model):
         
 class Group(models.Model):
     arranger = models.ForeignKey(UserProfile)
-    public = models.BooleanField('Is the group listed in the directory?', default=True)
     name = models.CharField('group name',max_length=50)
+    public = models.BooleanField('Is the group listed in the directory?', default=True)
     searchterms = models.TextField('Any additional search terms that someone might use to find this group', blank=True)
     latlon = models.TextField('lat:lon for group', blank=True)
     message = models.TextField('message to the group', blank=True)
@@ -45,7 +45,7 @@ class Song(models.Model):
     title = models.CharField('song title', max_length=50)
     pdf_location = models.CharField('static location for this song\'s PDF', max_length=100, blank=True)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
-    message = models.TextField('message to the group about this song', blank=True)
+    message = models.TextField('preformance notes', blank=True)
     short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.title;

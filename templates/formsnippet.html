@@ -1,0 +1,26 @@
+<div class="formcontainer">
+      <div class="formerrors">{{form.errors}}</div>
+      {% for field in form %}
+        <div class="formfield">
+          <div class="formfieldlabel">
+            {{field.label_tag}}
+          </div>
+          {% if field.errors %}
+          <div class="formfielderror">
+            {% for error in field.errors %}
+              {{error}}
+            {% endfor %}
+          </div>
+          {% endif %}
+          <div class="formfieldelement">
+            {{field}}
+          </div>
+        </div>
+      {% endfor %}
+      <div class="formfield">
+        <input type="submit" />
+      </div>
+      <div style="clear:both">
+        &nbsp;
+      </div>
+    </div>

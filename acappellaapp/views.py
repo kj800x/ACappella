@@ -20,6 +20,16 @@ class ProfileForm(ModelForm):
         model = UserProfile
         exclude = ('user',)
 
+class GroupForm(ModelForm):
+    class Meta:
+        model = Group
+        exclude = ('arranger','latlon', 'short_code', 'message')
+
+class SongForm(ModelForm):
+    class Meta:
+        model = Song
+        exclude = ('group', 'short_code', 'pdf_location')
+
 def check_profile(f):
   def wrapper(*args, **kw):
     if not (args[0].user.profile.website_name and args[0].user.profile.group_name):
@@ -61,6 +71,36 @@ def arrangerhome(request):
     form = GroupCreateForm()
   keywords = {"Groups": Group.objects.filter(arranger=request.user.profile), "GroupCreateForm": form }
   return render(request, 'arrangerhome.html', keywords)
+
+@login_required
+@check_profile
+def arrangergrouphome(request, group_short_code):
+  cur_group = Group.objects.get(short_code = group_short_code)
+  if request.method == 'POST': # If the form has been submitted...
+    if request.POST["__ACTION_TYPE"] == "D": #Delete Group
+      cur_group.delete()
+      return HttpResponseRedirect('/arranger/')
+    if request.POST["__ACTION_TYPE"] == "N": #New Song
+      newsong = Song(group=cur_group)
+      projectform = ProjectForm(request.POST, instance=newsong) # A form bound to the POST data
+      if projectform.is_valid(): # All validation rules pass
+        newsong.short_code = newsong.findshortcode(newsong.title)
+        projectform.save()
+        return HttpResponseRedirect('/arranger/group/' + group_short_code + '/song/' + newsong.short_code)
+      editform = GroupCreateForm(instance=cur_group)
+    else: #EDIT
+      editform = GroupCreateForm(request.POST, instance=cur_group) # A form bound to the POST data
+      if editform.is_valid(): # All validation rules pass
+        editform.save()
+        del editform;
+        editform = GroupCreateForm(instance=cur_group)
+      songform = SongForm()
+  else: #GET
+    songform = SongForm()
+    editform = GroupCreateForm(instance=cur_group)
+  keywords = {"group":cur_group, "Songs": Song.objects.filter(group=cur_group), "NewSongForm": songform, "EditGroupForm": editform }
+  return render(request, 'arrangergroup.html', keywords)
+
 
 def findgroup(request):
     group_list = Group.objects.all()
