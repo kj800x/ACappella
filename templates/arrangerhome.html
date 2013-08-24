@@ -5,7 +5,30 @@
 {% block contenttitle %}List of my vocal groups{% endblock %}
 
 {% block contentcontent %}
-
-This is the end of the railroad tracks... We'll keep laying down more, but this is where they end right now...
+  {% if Groups %}
+  <ul>
+  {% for a in Groups %}
+    <li>
+      <a href="/arranger/{{a.short_code}}/">{{a.name}}</a>
+    </li>
+  {% endfor %}
+  </ul>
+  {% else %}
+  <p> You have no vocal groups! </p>
+  {% endif %}
+  
+  <ul class="actions">
+    <li><a class="button" onclick="$('#newgroup').show();$(this).hide()">Create A New Group</a></li>
+  </ul>
+  
+  <div id="newgroup" style="display:none;border: 1px solid grey; padding:20px; border-radius: 10px;">
+    <h3> Create Group </h3>
+    <hr />
+    <form action="" method="POST">{% csrf_token %}
+      {{GroupCreateForm}}
+      <input type="submit" />
+    </form>
+  
+  </div>
 
 {% endblock contentcontent %}

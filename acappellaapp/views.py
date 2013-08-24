@@ -10,6 +10,11 @@ import json
 import os
 import random
 
+class GroupCreateForm(ModelForm):
+    class Meta:
+        model = Group
+        exclude = ('arranger',)
+        
 class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
@@ -40,6 +45,21 @@ def arrangerprofile(request):
 @check_profile
 def arrangerhome(request):
     return render(request, 'arrangerhome.html', {})
+
+
+@login_required
+@check_profile
+def arrangerhome(request):
+  if request.method == 'POST': # If the form has been submitted...
+    newgroup = Group(arranger=request.user.profile)
+    form = GroupCreateForm(request.POST, instance=newgroup) # A form bound to the POST data
+    if form.is_valid(): # All validation rules pass
+      form.save()
+      return HttpResponseRedirect('/arranger/'+str(newgroup.short_code))
+  else:
+    form = GroupCreateForm()
+  keywords = {"Groups": Group.objects.filter(arranger=request.user.profile), "GroupCreateForm": form }
+  return render(request, 'arrangerhome.html', keywords)
 
 def findgroup(request):
     group_list = Group.objects.all()
