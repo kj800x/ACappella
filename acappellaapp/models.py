@@ -16,9 +16,9 @@ class UserProfile(models.Model):
 class Group(models.Model):
     arranger = models.ForeignKey(UserProfile)
     name = models.CharField('group name',max_length=50)
-    public = models.BooleanField('Is the group listed in the directory?', default=True)
-    searchterms = models.TextField('Any additional search terms that someone might use to find this group', blank=True)
-    latlon = models.TextField('lat:lon for group', blank=True)
+    public = models.BooleanField('should the group be listed in the directory?', default=True)
+    searchterms = models.TextField('any additional search terms that someone might use to find this group', blank=True)
+    latlon = models.TextField('lat:lon for group', blank=True) #in case we do a type of map - search for groups later
     message = models.TextField('message to the group', blank=True)
     short_code = models.SlugField('unique, URL ready, shortcode', max_length=50, unique=True)
     def __unicode__(self):

@@ -1,0 +1,60 @@
+{% extends 'basetemplate.html' %}
+
+{% block contenttitle %} <a href="../../../.."> My Groups </a> &gt; <a href="../.."> {{group.name}} </a> &gt; {{song.title}} {% endblock %}
+
+{% block contentcontent %}
+  
+  {% if Tracks %}
+    <h1> Tracks for {{song.title}} </h1>
+    {% for a in Tracks %}
+      <a href="./tracks/{{a.short_code}}/">{{a.title}}</a>
+    {% endfor %}
+  {% else %}
+    <h1> There are no tracks for {{song.title}}</h1>
+  {% endif %}
+  
+  <ul class="actions">
+    <li><a onclick="$('#dest').show().html( $('#trackadd').html() )" class="button">Upload New Track</a></li>
+    <li><a onclick="$('#dest').show().html( $('#pdf').html() )" class="button">Upload PDF</a></li>
+    <li><a onclick="$('#dest').show().html( $('#edit').html() )" class="button">Edit This Song</a></li>
+    <li><a onclick="$('#dest').show().html( $('#delete').html() )" class="button">Delete This Song</a></li>
+  </ul>
+  
+  <div id="dest" style="display:none; border: 1px solid grey; padding:20px; border-radius: 10px;"></div >
+  
+  <div id="trackadd" style="display:none;">
+    <h3> Upload a Track </h3><p>This functionality is in the works</p><!--
+    <hr />
+    <form action="" method="POST">{% csrf_token %}
+    <input type="hidden" name="__ACTION_TYPE" value="N">
+      {% include 'formsnippet.html' with form=NewSongForm title="Create a new song" %}
+    </form>-->
+  </div>
+  <div id="pdf" style="display:none;">
+    <h3> Upload a PDF </h3><p>This functionality is in the works</p><!--
+    <hr />
+    <form action="" method="POST">{% csrf_token %}
+    <input type="hidden" name="__ACTION_TYPE" value="N">
+      {% include 'formsnippet.html' with form=NewSongForm title="Create a new song" %}
+    </form>-->
+  </div>
+  <div id="edit" style="display:none;">
+    <h3> Edit {{song.title}} </h3>
+    <hr />
+    <form action="" method="POST">{% csrf_token %}
+    <input type="hidden" name="__ACTION_TYPE" value="E">
+      {% include 'formsnippet.html' with form=EditSongForm title="Edit this song" %}
+    </form>
+  </div>
+  <div id="delete" style="display:none;">
+    <h3> Delete </h3>
+    <hr />
+    <form action="" method="POST">{% csrf_token %}
+    <input type="hidden" name="__ACTION_TYPE" value="D" />
+    <input type="submit" onclick="return confirm('Deletion is irreversible! Are you sure?')" style="border:4px solid red; background-color:pink" value="Delete this song" />
+    </form>
+  </div>
+
+{% endblock contentcontent %}
+
+{% block title %}{{group.name}}{% endblock title %}

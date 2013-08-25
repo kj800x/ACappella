@@ -74,6 +74,27 @@ def arrangerhome(request):
 
 @login_required
 @check_profile
+def arrangersonghome(request,group_short_code,song_short_code):
+  cur_group = Group.objects.get(short_code=group_short_code)
+  cur_song = Song.objects.get(short_code=song_short_code)
+  if request.method == 'POST':
+    if request.POST["__ACTION_TYPE"] == "D":
+      cur_song.delete()
+      return HttpResponseRedirect('/arranger/group/' + group_short_code)
+    else:
+      editsongform = SongForm(request.POST, instance=cur_song) # A form bound to the POST data
+      if editsongform.is_valid(): # All validation rules pass
+        editsongform.save()
+        del editsongform;
+        editsongform = SongForm(instance=cur_song)
+  else:
+    editsongform = SongForm(instance=cur_song)
+  keywords = {"EditSongForm": editsongform,"group":cur_group,"song":cur_song, "Tracks": Track.objects.filter(song=cur_song)}
+  return render(request, 'arrangersong.html', keywords)
+
+
+@login_required
+@check_profile
 def arrangergrouphome(request, group_short_code):
   cur_group = Group.objects.get(short_code = group_short_code)
   if request.method == 'POST': # If the form has been submitted...
