@@ -1,7 +1,9 @@
-{% extends 'public.html' %}
+{% extends 'basetemplate.html' %}
 
-{% block content %}
-    <h1> Look through your email for a verification email from us </h1>
-{% endblock content %}
+{% block title %}Registration complete{% endblock %}
+{% block contenttitle %}Registration complete{% endblock %}
 
-{% block title %}Registration: Check Email{% endblock title %}
+{% block contentcontent %}
+<h1>Check your email</h1>
+<p>An activation link has been sent to the email address you supplied, along with instructions for activating your account.</p>
+{% endblock %}

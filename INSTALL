@@ -2,6 +2,9 @@ NMay Need:
 
 sudo apt-get install libsox-fmt-mp3
 
+##Change /templates/registration/activation_email.txt
+##Change /templates/registration/activation_email_subject.txt
+##Check those templates in general.
 
 DEVELOPMENT SERVER:
 =====

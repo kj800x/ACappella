@@ -1,1 +1,1 @@
-Verify your account!
+Activate your acappella.coolkev.com account - you have {{ expiration_days }} days!

@@ -1,0 +1,30 @@
+{% extends 'public.html' %}
+
+{% block content %}
+	<h1>Register</h1>
+    <form action="" method="post">
+    {% csrf_token %}
+	{% for error in form.non_field_errors %}
+		<span class="formerror">{{ error|escape }}</span><br />
+	{% endfor %}
+    <table id="regform">
+		{% for field in form %}
+			<tr>
+				<td>
+					{% if field.errors %}
+						{% for error in field.errors %}
+							<span class="formerror">{{ error|escape }}</span><br />
+						{% endfor %}
+					{% endif %}
+					{{ field.label_tag }}
+				</td>
+				<td>
+					{{ field }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+    <input type="submit" value="Submit" />
+{% endblock content %}
+
+{% block title %}Register on PeerEditIt.com{% endblock title %}

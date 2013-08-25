@@ -1,0 +1,47 @@
+{% extends 'basetemplate.html' %}
+
+{% block title %}Arrangers Log In{% endblock title %}
+
+{% block contenttitle %} Login {% endblock %}
+
+{% block contentcontent %}
+
+  <p> Arrangers need an account on the website, but the website is not currently open to registration. If you have an account, log in below. If you'd like an account, send an email to "kevin@coolkev.com" with the words "!!Learning Tracks!! ACCOUNT REQUEST" in the subject.</p>
+  <p> Singers do not need an account on the website and - given their group leader created it - can find their group on <a href="/group/findgroup">this page</a>.</p>
+
+	{% for error in form.errors %}
+	    {% if error == "username" %}
+		<span class="formerror">Please enter your Username</span><br />
+		{% endif %}
+	    {% if error == "password" %}
+		<span class="formerror">Please enter your Password</span><br />
+		{% endif %}
+	    {% if error == "__all__" %}
+		<span class="formerror">You ether typed in the wrong username and password
+		combination, or you haven't clicked the link in your activation email.</span><br />
+		{% endif %}
+	{% endfor %}
+	
+	<form onsubmit="return isformvalid(this)" method="post" id="loginform" action="{% url 'django.contrib.auth.views.login' %}">
+	  {% csrf_token %}
+	  <table>
+	    <tr>
+		    <td>{{ form.username.label_tag }}</td>
+		    <td>{{ form.username }}</td>
+	    </tr>
+	    <tr>
+		    <td>{{ form.password.label_tag }}</td>
+		    <td>{{ form.password }}</td>
+	    </tr>
+	  </table><!--
+	  <ul class="actions">
+		  <li><a href="javascript:{}" onclick="document.getElementById('loginform').submit();" class="button">Login!</a></li>
+	  </ul>-->
+	  <input type="submit" />
+
+	
+	</form>
+	
+	
+{% endblock contentcontent %}
+

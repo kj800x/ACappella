@@ -1,0 +1,16 @@
+{% extends 'basetemplate.html' %}
+
+{% block title %}Arrangers Log In{% endblock title %}
+
+{% block contenttitle %} Goodbye! {% endblock %}
+
+{% block contentcontent %}
+	<p> You've logged out of !!Learning Tracks!!, we hope to see you again! </p>
+	<p> P.S. You'll be redirected to the home page in a couple of seconds. </p>
+	
+	<script type="text/javascript">
+	setTimeout(function(){window.location = '/'}, 10000)
+	</script>
+	
+{% endblock contentcontent %}
+
