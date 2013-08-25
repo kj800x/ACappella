@@ -82,10 +82,10 @@ def arrangergrouphome(request, group_short_code):
       return HttpResponseRedirect('/arranger/')
     if request.POST["__ACTION_TYPE"] == "N": #New Song
       newsong = Song(group=cur_group)
-      projectform = ProjectForm(request.POST, instance=newsong) # A form bound to the POST data
-      if projectform.is_valid(): # All validation rules pass
-        newsong.short_code = newsong.findshortcode(newsong.title)
-        projectform.save()
+      songform = SongForm(request.POST, instance=newsong) # A form bound to the POST data
+      if songform.is_valid(): # All validation rules pass
+        newsong.short_code = newsong.findshortcode(cur_group, newsong.title)
+        songform.save()
         return HttpResponseRedirect('/arranger/group/' + group_short_code + '/song/' + newsong.short_code)
       editform = GroupCreateForm(instance=cur_group)
     else: #EDIT

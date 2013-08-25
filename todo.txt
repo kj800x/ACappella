@@ -23,6 +23,8 @@
   When Implimenting Upload, make it call sox and have it merge to 1 channel. Sox gets grumpy later on if this isn't done
   Write code for the search field, so it has an effect on search results. (Make it grey/small text next to the group name?)
   
+  Add in links to reset, password change etc.
+  
   
   Provide Sudestions in the more information text. (Part listing, Preformance notes)
   More data for searching

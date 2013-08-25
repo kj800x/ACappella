@@ -20,7 +20,7 @@ class Group(models.Model):
     searchterms = models.TextField('Any additional search terms that someone might use to find this group', blank=True)
     latlon = models.TextField('lat:lon for group', blank=True)
     message = models.TextField('message to the group', blank=True)
-    short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
+    short_code = models.SlugField('unique, URL ready, shortcode', max_length=50, unique=True)
     def __unicode__(self):
         return self.name;
     def findshortcode(self, name):
@@ -48,9 +48,24 @@ class Song(models.Model):
     message = models.TextField('preformance notes', blank=True)
     short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
-        return self.title;
+        return self.title + " (" + self.group.name + ")";
+    def findshortcode(self, group, name):
+        notalpha = re.compile('[\W]+')
+        base = notalpha.sub('', name)
+        modifier = 0;
+        if not base:
+          base = "No_Name_Provided"
+        while True:
+          if modifier:
+            totry = base + str(modifier);
+          else:
+            totry = base;
+          if (not self._default_manager.filter(group=group, short_code=totry)):
+            return totry;
+          modifier = modifier + 1;
     class Meta:
         ordering = ['-pub_date']
+        unique_together = ('short_code', 'group',)
         
 class Track(models.Model):
     song = models.ForeignKey(Song)
