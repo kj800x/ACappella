@@ -91,7 +91,24 @@ background: pink;
   
   function getSaveFileTitle(mixdata){
     SongTitle = "{{song.title}}";
-    return (SongTitle+"-Mixdown.wav");
+    left = [];
+    right = [];
+    for (var i = 0; i < mixdata.length; i++){
+      if (mixdata[i].pan == "Left"){
+        left.push(mixdata[i])
+      }
+      if (mixdata[i].pan == "Right"){
+        right.push(mixdata[i])
+      }
+    }
+    if (left.length == 1) {
+      return (SongTitle+"-"+left[0].name+"-Track.wav");
+    } else if (right.length == 1) {
+      return (SongTitle+"-"+right[0].name+"-Track.wav");
+    }
+    else {
+      return (SongTitle+"-Mixdown.wav");
+    }
   }
   
   function get_value_from_radios(r){
@@ -136,6 +153,7 @@ background: pink;
       z.pan = get_value_from_radios(document.getElementsByName("pan-"+t.dataset["name"]));
       z.effect = get_value_from_radios(document.getElementsByName("effect-"+t.dataset["name"]));
       z.filename = t.dataset["filename"];
+      z.name = t.dataset["name"];
       requestdata.push(z);
     
     }
@@ -178,11 +196,14 @@ background: pink;
     actions.appendChild(item);
     
     var item = document.createElement("li");
-    var a = document.createElement("a");
-    a.href = "#";
-    a.className = "button";
-    a.innerHTML = "Play!";
-    item.appendChild(a);
+    var audio = document.createElement("audio");
+    var src = document.createElement("source");
+    audio.setAttribute("controls", true);
+    src.setAttribute("type", "audio/wav");
+    src.src = fileloc;
+    
+    audio.appendChild(src);
+    item.appendChild(audio);
     actions.appendChild(item);
     
     d.appendChild(actions);

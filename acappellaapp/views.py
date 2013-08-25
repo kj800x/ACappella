@@ -89,7 +89,7 @@ def arrangersonghome(request,group_short_code,song_short_code):
         editsongform = SongForm(instance=cur_song)
   else:
     editsongform = SongForm(instance=cur_song)
-  keywords = {"EditSongForm": editsongform,"group":cur_group,"song":cur_song, "Tracks": Track.objects.filter(song=cur_song)}
+  keywords = {"EditSongForm": editsongform,"group":cur_group,"song":cur_song, "Tracks": Track.objects.in_score_order(song=cur_song)}
   return render(request, 'arrangersong.html', keywords)
 
 
@@ -138,7 +138,8 @@ def displaygroup(request, group_short_code):
 def displaysong(request, group_short_code, song_short_code):
     group = Group.objects.filter(short_code = group_short_code)[0]
     song = Song.objects.filter(short_code = song_short_code, group = group)[0]
-    track_list = Track.objects.filter(song = song);
+    
+    track_list = Track.objects.in_score_order(song = song);
     context = {'group': group, 'song': song, 'track_list': track_list}
     return render(request, 'displaysong.html', context)
     

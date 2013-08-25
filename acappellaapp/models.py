@@ -3,6 +3,27 @@ from django.contrib.auth.models import User
 import re;
 # Create your models here.
 
+class TrackManager(models.Manager):
+    def sortkey(self, name):
+      order = {
+        "lead"    : 0,
+        "perc"    : 1,
+        "box"     : 1,
+        "soprano" : 2, 
+        "mezzo"   : 3, 
+        "alto"    : 4, 
+        "ten"     : 5,
+        "bari"    : 6,
+        "bass"    : 7,
+      }
+      for a in order:
+        if a in name.name.lower():
+          return order[a]
+      return 10
+    def in_score_order(self, *args, **kwargs):
+        qs = self.get_query_set().filter(*args, **kwargs)
+        return sorted(qs, key=self.sortkey)
+
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     join_date = models.DateTimeField('Join date', auto_now_add=True)
@@ -73,6 +94,7 @@ class Track(models.Model):
     location = models.CharField('static location for this audio file', max_length=100)
     def __unicode__(self):
         return self.name + " (" + self.song.title + ")";
-        
+    objects = TrackManager()
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
