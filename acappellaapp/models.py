@@ -66,7 +66,7 @@ class Song(models.Model):
     title = models.CharField('song title', max_length=50)
     pdf_location = models.CharField('static location for this song\'s PDF', max_length=100, blank=True)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
-    message = models.TextField('preformance notes', blank=True)
+    message = models.TextField('performance notes', blank=True)
     short_code = models.SlugField('unique, URL ready, shortcode', max_length=50)
     def __unicode__(self):
         return self.title + " (" + self.group.name + ")";
