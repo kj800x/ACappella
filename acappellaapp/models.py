@@ -7,6 +7,7 @@ class TrackManager(models.Manager):
     def sortkey(self, name):
       order = {
         "lead"    : 0,
+        "solo"    : 0,
         "perc"    : 1,
         "box"     : 1,
         "soprano" : 2, 
