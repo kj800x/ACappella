@@ -14,22 +14,14 @@
   {% endif %}
   
   <ul class="actions">
-    <li><a onclick="$('#dest').show().html( $('#trackadd').html() )" class="button">Upload New Track</a></li>
+    <li><a href="./upload/track/" class="button">Upload New Track</a></li>
     <li><a onclick="$('#dest').show().html( $('#pdf').html() )" class="button">Upload PDF</a></li>
     <li><a onclick="$('#dest').show().html( $('#edit').html() )" class="button">Edit This Song</a></li>
     <li><a onclick="$('#dest').show().html( $('#delete').html() )" class="button">Delete This Song</a></li>
   </ul>
   
-  <div id="dest" style="display:none; border: 1px solid grey; padding:20px; border-radius: 10px;"></div >
+  <div id="dest" class="beautifulform" style="display:none;"></div >
   
-  <div id="trackadd" style="display:none;">
-    <h3> Upload a Track </h3><p>This functionality is in the works</p><!--
-    <hr />
-    <form action="" method="POST">{% csrf_token %}
-    <input type="hidden" name="__ACTION_TYPE" value="N">
-      {% include 'formsnippet.html' with form=NewSongForm title="Create a new song" %}
-    </form>-->
-  </div>
   <div id="pdf" style="display:none;">
     <h3> Upload a PDF </h3><p>This functionality is in the works</p><!--
     <hr />

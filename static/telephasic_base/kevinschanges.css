@@ -1,0 +1,23 @@
+.beautifulform {
+
+ border: 1px solid grey; padding:20px; border-radius: 10px;
+margin-top: 20px;
+
+}
+
+
+#mixer table,#mixer th,#mixer td
+{
+border: 1px solid black;
+}
+#mixer th {
+padding:3px;
+background:rgb(213, 65, 90);;
+color:white;
+font-size: 1.3em;
+text-align: left;
+}
+#mixer td {
+padding:3px;
+background: pink;
+}

@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.forms import ModelForm
+import django.forms as forms
 import acappellasite.localsettings as localsettings
 import json
 import os
@@ -38,6 +39,13 @@ def check_profile(f):
       return f(*args, **kw) 
   return wrapper
 
+class UploadTrackForm(forms.Form):
+    name = forms.CharField(max_length=30)
+    file  = forms.FileField()
+
+class UploadPDFForm(forms.Form):
+    file  = forms.FileField()
+
 def arrangerprofile(request):
     if request.method == 'POST': # If the form has been submitted...
         form = ProfileForm(request.POST, instance=request.user.profile) # A form bound to the POST data
@@ -50,13 +58,6 @@ def arrangerprofile(request):
         form = ProfileForm(instance=request.user.profile) # An unbound form
     return render(request, 'arrangerprofile.html', {"form": form})
       
-
-@login_required
-@check_profile
-def arrangerhome(request):
-    return render(request, 'arrangerhome.html', {})
-
-
 @login_required
 @check_profile
 def arrangerhome(request):
@@ -91,6 +92,42 @@ def arrangersonghome(request,group_short_code,song_short_code):
     editsongform = SongForm(instance=cur_song)
   keywords = {"EditSongForm": editsongform,"group":cur_group,"song":cur_song, "Tracks": Track.objects.in_score_order(song=cur_song)}
   return render(request, 'arrangersong.html', keywords)
+
+@login_required
+@check_profile
+def arrangeruploadtrack(request,group_short_code,song_short_code):
+  cur_group = Group.objects.get(short_code=group_short_code)
+  cur_song = Song.objects.get(short_code=song_short_code)
+  if request.method == 'POST':
+    form = UploadTrackForm(request.POST, request.FILES)
+    if form.is_valid():
+      newtrack = Track (
+                        song = cur_song,
+                        location = "INVALID",
+                        name = form.cleaned_data['name'])
+      newtrack.save();
+      newfile = request.FILES['file'];
+      temp_dest_filename = localsettings.basedir() + 'static/user/tracks/t_' + str(newtrack.id) + os.path.splitext(newfile.name)[1]
+      simple_dest_filename = str(newtrack.id) + '.wav'
+      dest_filename = localsettings.basedir() + 'static/user/tracks/' + simple_dest_filename#TODO REMOVE HARDCODED EXTENTION
+      destination = open(temp_dest_filename, 'wb+') 
+      for chunk in newfile.chunks():
+          destination.write(chunk)
+      destination.close()
+      
+      soxcommand_clean = "sox "+temp_dest_filename+" "+dest_filename+" channels 1"; #reduces the track to mono
+      os.system(soxcommand_clean)
+      
+      newtrack.location = simple_dest_filename;# str(newchannel.id) + "-" + newfile.name.replace("..", "_").replace("/", "_").replace("~", "_").replace("$", "_").replace("*", "_");
+      newtrack.save()
+      
+      rmcommand = 'rm '+temp_dest_filename;
+
+      os.system(rmcommand)          
+      return HttpResponseRedirect('/arranger/group/'+group_short_code+'/song/'+song_short_code+'/')
+  else:
+    form = UploadTrackForm()
+  return render(request, 'arrangeruploadchannel.html', {'form': form, "group": cur_group, "song":cur_song })
 
 
 @login_required

@@ -21,7 +21,7 @@
     <li><a class="button" onclick="$('.actions').hide();$('#newgroup').show();$(this).hide()">Create A New Group</a></li>
   </ul>
   
-  <div id="newgroup" style="display:none;border: 1px solid grey; padding:20px; border-radius: 10px;">
+  <div id="newgroup" class="beautifulform" style="display:none;">
     <h3> Create Group </h3>
     <hr />
     <form action="" method="POST">{% csrf_token %}
