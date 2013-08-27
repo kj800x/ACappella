@@ -15,21 +15,12 @@
   
   <ul class="actions">
     <li><a href="./upload/track/" class="button">Upload New Track</a></li>
-    <li><a onclick="$('#dest').show().html( $('#pdf').html() )" class="button">Upload PDF</a></li>
+    <li><a href="./upload/pdf/" class="button">Upload PDF</a></li>
     <li><a onclick="$('#dest').show().html( $('#edit').html() )" class="button">Edit This Song</a></li>
     <li><a onclick="$('#dest').show().html( $('#delete').html() )" class="button">Delete This Song</a></li>
   </ul>
   
-  <div id="dest" class="beautifulform" style="display:none;"></div >
-  
-  <div id="pdf" style="display:none;">
-    <h3> Upload a PDF </h3><p>This functionality is in the works</p><!--
-    <hr />
-    <form action="" method="POST">{% csrf_token %}
-    <input type="hidden" name="__ACTION_TYPE" value="N">
-      {% include 'formsnippet.html' with form=NewSongForm title="Create a new song" %}
-    </form>-->
-  </div>
+  <div id="dest" class="beautifulform" style="display:none;"></div>
   <div id="edit" style="display:none;">
     <h3> Edit {{song.title}} </h3>
     <hr />

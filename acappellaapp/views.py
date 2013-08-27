@@ -132,6 +132,28 @@ def arrangeruploadtrack(request,group_short_code,song_short_code):
 
 @login_required
 @check_profile
+def arrangeruploadpdf(request,group_short_code,song_short_code):
+  cur_group = Group.objects.get(short_code=group_short_code)
+  cur_song = Song.objects.get(short_code=song_short_code)
+  if request.method == 'POST':
+    form = UploadPDFForm(request.POST, request.FILES)
+    if form.is_valid():
+      newfile = request.FILES['file'];
+      filename =  str(cur_song.id) + ".pdf" 
+      destination = open(localsettings.basedir() + 'static/user/pdfs/' + filename, 'wb+')
+      for chunk in newfile.chunks():
+        destination.write(chunk)
+      destination.close()
+      cur_song.pdf_location = filename;
+      cur_song.save()
+      return HttpResponseRedirect('/arranger/group/'+group_short_code+'/song/'+song_short_code+'/')
+  else:
+    form = UploadPDFForm()
+  return render(request, 'arrangeruploadpdf.html', {'form': form, "song":cur_song, "group":cur_group })
+
+
+@login_required
+@check_profile
 def arrangergrouphome(request, group_short_code):
   cur_group = Group.objects.get(short_code = group_short_code)
   if request.method == 'POST': # If the form has been submitted...

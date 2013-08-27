@@ -1,0 +1,17 @@
+{% extends 'basetemplate.html' %}
+
+{% block contenttitle %} <a href="../../../../../.."> My Groups </a> &gt; <a href="../../../.."> {{group.name}} </a> &gt; <a href="../.."> {{song.title}} </a> &gt; Upload PDF{% endblock %}
+
+{% block contentcontent %}
+  <div class="beautifulform">
+  
+    <form enctype="multipart/form-data" action="" method="POST">{% csrf_token %}
+    {{form}}<br />
+    <input type="submit" />
+    </form>
+  
+  </div>
+{% endblock %}
+
+
+{% block title %}Upload PDF: {{song.name}}{% endblock %}
