@@ -1,35 +1,33 @@
 + "disabledbutton" css class, like a button, but doesn't glow on hover !IMPORTANT
 + Add a Download/Listen button after a mix-down
-
 + Change URL scheme to nest groups under /group/.
-  Login page should do Javascript verification (to make sure they don't try their email address).
-  Login page should put errors in a better place.
 + Create a profile fixer page.
 + Make it so that the tracks can be mixed down.
++ Make it so that every mixdown uses a unique id, or doesn't overwrite files everytime its called.
++ Make it so that the filename creator checks for any obvious focuses, Ex: there is only the Bass on the left channel, so call it "TooClose-BassMix"
++   Otherwise call it a generic "TooClose-Mixdown"
++ When Implimenting Upload, make it call sox and have it merge to 1 channel. Sox gets grumpy later on if this isn't done
++ Breadcrub - style in the title o pages. - Hyperlink
+
+
+  Login page should do Javascript verification (to make sure they don't try their email address).
+  Login page should put errors in a better place.
   Clean up HTML pages (Remove inline JS/CSS)
   Maybe send the JS through CLOSURE COMPILER
   Finish up INSTALL
   Reenable Effects on the Song-Mixdown page
   Make sure that nobody passes in any ".."'s or "/"'s in a mixdown paramater. No SQL injection please.
   Check for additional TODO flags
-+ Make it so that every mixdown uses a unique id, or doesn't overwrite files everytime its called.
   Maybe change system.os to subprocess.call somehow
   Create Friendly Status Thingys on the Song-Mixdown page.
     Javascript failed somewhere
     Processing
     Server Returned non 200
-+ Make it so that the filename creator checks for any obvious focuses, Ex: there is only the Bass on the left channel, so call it "TooClose-BassMix"
-+   Otherwise call it a generic "TooClose-Mixdown"
-+ When Implimenting Upload, make it call sox and have it merge to 1 channel. Sox gets grumpy later on if this isn't done
   Write code for the search field, so it has an effect on search results. (Make it grey/small text next to the group name?)
-  
-  Add in links to reset, password change etc.
-  
-  
+  Add in links to reset, password change etc. 
   Provide Sudestions in the more information text. (Part listing, Preformance notes)
   More data for searching
   Spotify Hyperlink on song page
   Singer songwriter in title (on song listing page?)
-+ Breadcrub - style in the title o pages. - Hyperlink
   Subtle hints of design. (Little Icons next to song name/group name)
   Pass Protection of group. (Hide from listing, URL is jumbled.)
