@@ -5,6 +5,12 @@ margin-top: 20px;
 
 }
 
+.chkmark {
+color: green;
+}
+.xmark {
+color: red;
+}
 
 #mixer table,#mixer th,#mixer td
 {

@@ -3,19 +3,35 @@
 {% block contenttitle %} <a href="../../../.."> My Groups </a> &gt; <a href="../.."> {{group.name}} </a> &gt; {{song.title}} {% endblock %}
 
 {% block contentcontent %}
-  
+  <div class="beautifulform">
+  <h3> {{song.title}} </h3>
+  <hr />
   {% if Tracks %}
-    <h1> Tracks for {{song.title}} </h1>
+    <h4> <span class="chkmark">&#x2713;</span> Tracks: </h4>
+    <ul style="padding-left: 20px;">
     {% for a in Tracks %}
-      <a href="./tracks/{{a.short_code}}/">{{a.title}}</a>
+      <li> <a href="./del">[DELETE]</a> {{a.name}}</li>
     {% endfor %}
+    </ul>
   {% else %}
-    <h1> There are no tracks for {{song.title}}</h1>
+    <h4> <span class="xmark">&#x2717;</span> There are currently no tracks for {{song.title}}</h4>
   {% endif %}
+  <hr />
+  {% if song.pdf_location %}
+    <h4> <span class="chkmark">&#x2713;</span> This song has a PDF! </h4>
+  {% else %}
+    <h4> <span class="xmark">&#x2717;</span> Upload the sheet music as a PDF! </h4>
+  {% endif %}
+  </div>
   
   <ul class="actions">
     <li><a href="./upload/track/" class="button">Upload New Track</a></li>
-    <li><a href="./upload/pdf/" class="button">Upload PDF</a></li>
+    {% if song.pdf_location %}
+    <li><a href="./upload/pdf/" class="button">Re-Upload Sheet Music</a></li>
+    <li><a href="./delete/pdf/" class="button">Delete Sheet Music</a></li>
+    {% else %}
+    <li><a href="./upload/pdf/" class="button">Upload Sheet Music</a></li>
+    {% endif %}
     <li><a onclick="$('#dest').show().html( $('#edit').html() )" class="button">Edit This Song</a></li>
     <li><a onclick="$('#dest').show().html( $('#delete').html() )" class="button">Delete This Song</a></li>
   </ul>
