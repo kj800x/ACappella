@@ -10,7 +10,7 @@
     <h4> <span class="chkmark">&#x2713;</span> Tracks: </h4>
     <ul style="padding-left: 20px;">
     {% for a in Tracks %}
-      <li> <a href="./del">[DELETE]</a> {{a.name}}</li>
+      <li> <a href="./delete/track/{{a.id}}/">[DELETE]</a> {{a.name}}</li>
     {% endfor %}
     </ul>
   {% else %}

@@ -135,6 +135,26 @@ def uploadtrack(request,group_short_code,song_short_code):
 
 @login_required
 @check_profile
+def deletetrack(request,group_short_code,song_short_code,track_id):
+  cur_group = Group.objects.get(short_code=group_short_code)
+  cur_song = Song.objects.get(short_code=song_short_code)
+  cur_track = Track.objects.get(id=track_id)
+  cur_track.delete();
+  return HttpResponseRedirect('/arranger/group/'+group_short_code+'/song/'+song_short_code+'/')
+
+@login_required
+@check_profile
+def deletepdf(request,group_short_code,song_short_code):
+  cur_group = Group.objects.get(short_code=group_short_code)
+  cur_song = Song.objects.get(short_code=song_short_code)
+  command = "rm " + localsettings.basedir() + 'static/user/pdfs/' + cur_song.pdf_location
+  os.system(command)
+  cur_song.pdf_location = "";
+  cur_song.save();
+  return HttpResponseRedirect('/arranger/group/'+group_short_code+'/song/'+song_short_code+'/')
+
+@login_required
+@check_profile
 def uploadpdf(request,group_short_code,song_short_code):
   cur_group = Group.objects.get(short_code=group_short_code)
   cur_song = Song.objects.get(short_code=song_short_code)
