@@ -17,7 +17,8 @@ import os
 
 import sys
 
-path = '/www/django/acappellasite'
+path = "/".join(os.path.abspath( __file__ ).split('/')[:-2])
+
 if path not in sys.path:
     sys.path.append(path)
     

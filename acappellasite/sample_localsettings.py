@@ -1,5 +1,7 @@
+import os
+
 def basedir(): #Base dir for your site, with a trailing slash.
-    return "/path/to/your/ACappella/directory/(WITH A TRAILING SLASH)/"
+    return "/".join(os.path.abspath( __file__ ).split('/')[:-2]) + "/"
 
 def getdatabases():
     return {
