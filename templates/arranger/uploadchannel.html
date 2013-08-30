@@ -4,7 +4,8 @@
 
 {% block contentcontent %}
   <div class="beautifulform">
-  
+    <h3> Upload a track.</h3>
+    <p> Each track should contain only one part, and all tracks for a song should start at the same point in the song, usually the beginning. </p><hr />
     <form enctype="multipart/form-data" action="" method="POST">{% csrf_token %}
     {{form}}<br />
     <input type="submit" />
