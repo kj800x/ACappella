@@ -114,6 +114,15 @@
     return null;
   }
   
+  
+  function UrlExists(url) //I know that this function is synchronous, and most people recommend that it shouldn't, but it works well in this situation.
+  {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status!=404;
+  }
+  
   function request_mix(){
     //Processing
     if (window.inprocessing == true) {return null}
@@ -139,18 +148,26 @@
     
     }
     
-    // Make the request.
-    
     var json_requestdata = JSON.stringify(requestdata);
     
-    $.ajax({
-      type: "POST",
-      url: "./makeamixdown/",
-      data: { "json": json_requestdata }
-    })
-    .done(function( msg ) {
-      MixdownRecieved(msg, requestdata)
-    });
+    //See if this mixdown has already been created
+    var hash = CryptoJS.SHA256(json_requestdata);
+    if (UrlExists("/static/user/mixdowns/" + hash + ".wav")){
+      //Mixdown already exists, use it.
+      MixdownRecieved("/static/user/mixdowns/" + hash + ".wav", requestdata)
+    } else {
+      // It needs to be created, so ask the server to make it.
+      $.ajax({
+        type: "POST",
+        url: "./makeamixdown/",
+        data: { "json": json_requestdata }
+      })
+      .done(function( msg ) {
+        MixdownRecieved(msg, requestdata)
+      });
+    }
+    
+   
   }
   
   function MixdownRecieved(fileloc, data){

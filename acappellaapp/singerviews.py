@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 import acappellasite.localsettings as localsettings
 import json
 import os
-import random
+import hashlib
 
 def findgroup(request):
     group_list = Group.objects.all()
@@ -31,10 +31,11 @@ def displaysong(request, group_short_code, song_short_code):
 def makeamixdown(request, group_short_code, song_short_code):
     #create a list to include all temporary files
     tempfiles = []
-    #create a random int to be used later
-    rint = random.randint(1, 500000)
     #GET THE POST VALUES FROM REQUEST
     jsonstring = request.POST["json"]
+    #GET THE FILENAME HASH
+    hexhash = hashlib.sha256(jsonstring).hexdigest()
+    
     #CREATE AN OBJECT OUT OF THE DATA: "json"
     data = json.loads(jsonstring)
     #TODO: LATER HERE, ADD IN EFFECT PROCESSING
@@ -51,7 +52,7 @@ def makeamixdown(request, group_short_code, song_short_code):
         sr = sr[:-1]
     
     #COMBINE LEFT CHANEL FILES AND RIGHT CHANEL FILES #TODO: I AM BREAKING (DRY)[wiki]. Factor this out.
-    left_outputfile = localsettings.basedir() + "static/user/temp/LEFT_temp_"+str(rint)+".wav" 
+    left_outputfile = localsettings.basedir() + "static/user/temp/LEFT_temp_"+hexhash+".wav" 
     tempfiles.append(left_outputfile)
     if len(left) > 1:
         leftmixfiles = ""
@@ -65,7 +66,7 @@ def makeamixdown(request, group_short_code, song_short_code):
     print(leftmixcommand)
     os.system(leftmixcommand)
     
-    right_outputfile = localsettings.basedir() + "static/user/temp/RIGHT_temp_"+str(rint)+".wav" 
+    right_outputfile = localsettings.basedir() + "static/user/temp/RIGHT_temp_"+hexhash+".wav" 
     tempfiles.append(right_outputfile)
     if len(right) > 1:
         rightmixfiles = ""
@@ -79,8 +80,8 @@ def makeamixdown(request, group_short_code, song_short_code):
     print(rightmixcommand)
     os.system(rightmixcommand)
     
-    final_outputfile = localsettings.basedir() + "static/user/mixdowns/mixdown_"+str(rint)+".wav"
-    final_outputfile_url = "/static/user/mixdowns/mixdown_"+str(rint)+".wav"
+    final_outputfile = localsettings.basedir() + "static/user/mixdowns/"+hexhash+".wav"
+    final_outputfile_url = "/static/user/mixdowns/"+hexhash+".wav"
     finalremixcommand = "sox -M "+left_outputfile+" "+right_outputfile+" "+final_outputfile
     print(finalremixcommand)
     os.system(finalremixcommand)
