@@ -8,7 +8,7 @@ import os
 import hashlib
 
 def findgroup(request):
-    group_list = Group.objects.all()
+    group_list = Group.objects.filter(public = True)
     context = {'group_list': group_list}
     return render(request, 'singer/findgroup.html', context)
 
