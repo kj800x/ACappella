@@ -4,22 +4,22 @@ import re;
 # Create your models here.
 
 class TrackManager(models.Manager):
-    def sortkey(self, name):
-      order = {
+    order = {
         "lead"    : 0,
         "solo"    : 0,
         "perc"    : 1,
         "box"     : 1,
-        "soprano" : 2, 
         "mezzo"   : 3, 
+        "sop"     : 2, 
         "alto"    : 4, 
         "ten"     : 5,
         "bari"    : 6,
         "bass"    : 7,
-      }
-      for a in order:
+    }
+    def sortkey(self, name):
+      for a in self.order:
         if a in name.name.lower():
-          return order[a]
+          return self.order[a]
       return 10
     def in_score_order(self, *args, **kwargs):
         qs = self.get_query_set().filter(*args, **kwargs)

@@ -9,14 +9,12 @@
 
 {% if group.message %}
   <p> {{group.message}} </p>
-{% else %}
-  <p> This group is fresh off the press! This group's arranger can replace this message by editing the "message to the group". </p>  
 {% endif %}
 <p> Songs: </p>
 {% if song_list %}
     <ul>
     {% for song in song_list %}
-        <li><h3><a href="/group/{{group.short_code}}/{{song.short_code}}/">{{ song.title }}</a></h3></li>
+        <li><h3><a href="/group/{{group.short_code}}/{{song.short_code}}/">{{ song.title }} </a></h3></li>
     {% endfor %}
     </ul>
 {% else %}

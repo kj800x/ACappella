@@ -3,6 +3,8 @@
 {% block contenttitle %} <a href="../../../.."> My Groups </a> &gt; <a href="../.."> {{group.name}} </a> &gt; {{song.title}} {% endblock %}
 
 {% block contentcontent %}
+  <div id="publiclink">Share this link with your singers: <a href="/group/{{group.short_code}}/{{song.short_code}}">http://acappella.coolkev.com/group/{{group.short_code}}/{{song.short_code}}</div>
+
   <div class="beautifulform">
   <h3> {{song.title}} </h3>
   <hr />
